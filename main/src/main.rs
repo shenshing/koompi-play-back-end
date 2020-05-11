@@ -35,12 +35,13 @@ fn main() {
 
     let cors = CorsOptions { 
         allowed_origins,
-        allowed_methods: vec![Method::Get].into_iter().map(From::from).collect(), 
+        allowed_methods: vec![Method::Get, Method::Post].into_iter().map(From::from).collect(), 
         allowed_headers: AllowedHeaders::some(&[
             "Authorization",
             "Accept",
             "Access-Control-Allow-Origin", 
             "token",
+	    "Content-Type",
         ]),
         allow_credentials: true,
         ..Default::default()
