@@ -10,6 +10,7 @@ use self::game_back_end::user::*;
 
 extern crate diesel;
 use self::userInfo::*;
+// use self::userInfo::static_rocket_route_info_for_uploadProfile;
 extern crate rocket_cors;
 
 use rocket_contrib::templates::Template;
@@ -65,7 +66,8 @@ fn main() {
                             displayUser,
                             userData,
                             test_token,
-                            upload_profile, 
+                            // upload_profile, 
+                            uploadprofile,
                             get_profile,
 			                test_login,
 			                userData1,
@@ -74,6 +76,5 @@ fn main() {
         .attach(cors)
         .attach(Template::fairing())
         .launch();
-
 }
 

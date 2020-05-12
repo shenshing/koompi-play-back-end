@@ -1,5 +1,3 @@
-
-
 extern crate chrono;
 extern crate serde;
 
@@ -57,7 +55,7 @@ impl FromDataSimple for User {
     type Error = String;
 
     fn from_data(req: &Request, data: Data) -> data::Outcome<Self, String> {
-            let now = SystemTime::now();
+            // let now = SystemTime::now();
             let new_user = User {
                 user_name:      String::from("username"),
                 user_gender:    String::from("user gender"),
@@ -190,14 +188,14 @@ impl FromDataSimple for loginInfo {
 
 
 
-#[derive(Deserialize)]
+#[derive(Deserialize, Clone)]
 pub struct updateItem {
-    pub token:          String,
-    pub newName:        String,
-    pub newPassword:    String,
-    pub newProfile:     String,
-    pub newRole:        String,
-    pub newPhone:       String
+    // pub token:          String,
+    pub newName:        Option<String>,
+    pub newPassword:    Option<String>,
+    pub newProfile:     Option<String>,
+    pub newRole:        Option<String>,
+    pub newPhone:       Option<String>
 }
 
 impl FromDataSimple for updateItem {
@@ -206,12 +204,12 @@ impl FromDataSimple for updateItem {
     fn from_data(req: &Request, data: Data) -> data::Outcome<Self, String> {
 
         let update_info = updateItem {
-            token:  String::from("ok"),
-            newName: String::from("ok"),
-            newPassword: String::from("ok"),
-            newProfile: String::from("ok"),
-            newRole: String::from("ok"),
-            newPhone: String::from("ok"),
+            // token:  String::from("ok"),
+            newName:        Some(String::from("ok")),
+            newPassword:    Some(String::from("ok")),
+            newProfile:     Some(String::from("ok")),
+            newRole:        Some(String::from("ok")),
+            newPhone:       Some(String::from("ok")),
         };
         
         Success(update_info)
