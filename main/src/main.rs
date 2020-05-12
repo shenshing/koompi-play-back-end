@@ -76,6 +76,6 @@ fn main() {
                             hello])
         .attach(cors)
         .attach(Template::fairing())
-        .launch();
+        .launch(); 
 }
 
