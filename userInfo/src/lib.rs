@@ -103,28 +103,14 @@ pub fn filter_user(token: String) -> Find {
 }
 
 pub fn get_user_by_name_password(name: String, password: String) -> Result<_User, diesel::result::Error> {
-// pub fn get_user_by_name_password(name: String, password: String) {
     use self::schema::users::dsl::{users, user_name, user_password};
 
-    // let result = users.filter(user_name.like(name))
-    //     .filter(user_password.like(password))
-    //     .get_result(&establish_connection());
-        // .unwrap();
-
-
-    // println!("result: {:#?}", result);
-    // if(result == 0) {
-    //     return Err(String::from("not found"));
-    // } else {
-    //     return Ok(result);
-    // }
     match users.filter(user_name.eq(name))
         .filter(user_password.eq(password))
         .get_result::<_User>(&establish_connection()) {
         Ok(user) => return Ok(user),
         Err(err) => return Err(err),
     }
-    // return Ok(result);
 }
 
 
@@ -215,9 +201,11 @@ pub fn hello() -> String {
 pub fn set_default_profile(gender: String) -> String {
     let mut default_profile = String::new();
     if(gender == String::from("Male")) {
-        default_profile = String::from("http://localhost:8000/get_profile/EOk1");
+        // default_profile = String::from("http://localhost:8000/get_profile/EOk1");
+        default_profile = String::from("http://52.221.199.235:9000/get_profile/EOk1");
     } else {
-        default_profile = String::from("http://localhost:8000/get_profile/cQrw");
+        // default_profile = String::from("http://localhost:8000/get_profile/cQrw");
+        default_profile = String::from("http://52.221.199.235:9000/get_profile/cQrw");
     }
     return default_profile;
 }
@@ -234,85 +222,85 @@ use rocket::http::ContentType;
 
 
 //upload to specific users
-#[post("/uploadto/<token>", data = "<data>")]
-pub fn upload_profile(content_type: &ContentType, data: Data, token: String) -> Result<RawResponse, &'static str> {
+// #[post("/uploadto/<token>", data = "<data>")]
+// pub fn upload_profile(content_type: &ContentType, data: Data, token: String) -> Result<RawResponse, &'static str> {
     
-    let token_decode = decode_token(token.clone());
-    let name =  token_decode.claims.user_name;
-    let password = token_decode.claims.user_password;
+//     let token_decode = decode_token(token.clone());
+//     let name =  token_decode.claims.user_name;
+//     let password = token_decode.claims.user_password;
 
-    let res = filter_user(token);
+//     let res = filter_user(token);
     
-    match res {
-        Find::Found => {
-            //user found
-            let mut options = MultipartFormDataOptions::new();
-            options.allowed_fields.push(
-                MultipartFormDataField::raw("image")
-                    .size_limit(32 * 1024 * 1024)
-                    .content_type_by_string(Some(mime::IMAGE_STAR))
-                    .unwrap(),
-            );
+//     match res {
+//         Find::Found => {
+//             //user found
+//             let mut options = MultipartFormDataOptions::new();
+//             options.allowed_fields.push(
+//                 MultipartFormDataField::raw("image")
+//                     .size_limit(32 * 1024 * 1024)
+//                     .content_type_by_string(Some(mime::IMAGE_STAR))
+//                     .unwrap(),
+//             );
 
-            let mut multipart_form_data = match MultipartFormData::parse(content_type, data, options) {
-                Ok(multipart_form_data) => multipart_form_data,
-                Err(err) => {
-                    match err {
-                        MultipartFormDataError::DataTooLargeError(_) => {
-                            return Err("The file is too large.")
-                        }
-                        MultipartFormDataError::DataTypeError(_) => {
-                            return Err("The file is not an image.")
-                        }
-                        _ => panic!("{:?}", err),
-                    }
-                }
-            };
+//             let mut multipart_form_data = match MultipartFormData::parse(content_type, data, options) {
+//                 Ok(multipart_form_data) => multipart_form_data,
+//                 Err(err) => {
+//                     match err {
+//                         MultipartFormDataError::DataTooLargeError(_) => {
+//                             return Err("The file is too large.")
+//                         }
+//                         MultipartFormDataError::DataTypeError(_) => {
+//                             return Err("The file is not an image.")
+//                         }
+//                         _ => panic!("{:?}", err),
+//                     }
+//                 }
+//             };
 
-            let image = multipart_form_data.raw.remove("image");
+//             let image = multipart_form_data.raw.remove("image");
 
-            match image {
-                Some(image) => {
-                    match image {
-                        RawField::Single(raw) => {
-                            let content_type = raw.content_type;
-                            let file_name = format!("{}", PasteID::new(name_length));
-                            let data = raw.raw;
+//             match image {
+//                 Some(image) => {
+//                     match image {
+//                         RawField::Single(raw) => {
+//                             let content_type = raw.content_type;
+//                             let file_name = format!("{}", PasteID::new(name_length));
+//                             let data = raw.raw;
                             
-                            let file_fmt = format!("../userInfo/image-bank/{}", file_name);
-                            let mut file = File::create(file_fmt).unwrap();
+//                             let file_fmt = format!("../userInfo/image-bank/{}", file_name);
+//                             let mut file = File::create(file_fmt).unwrap();
                             
-                            let write_res = file.write(&data[0..]).unwrap();
-                                /*update user profile image*/
-                                let new_profile_path = format!("http://localhost:8000/get_profile/{}", file_name);
+//                             let write_res = file.write(&data[0..]).unwrap();
+//                                 /*update user profile image*/
+//                                 let new_profile_path = format!("http://localhost:8000/get_profile/{}", file_name);
                                 
-                                if(update_profile(name.clone(), password.clone(), new_profile_path.clone()) == updateMessage::Success) {
-                                    return Err("update user profile Successfully");
-                                } else if(update_profile(name.clone(), password.clone(), new_profile_path.clone()) == updateMessage::Unsuccess) {
-                                    return Err("update user profile Unsuccessful");
-                                } else {
-                                    // let st = format!("Something went wrong when trying to update \"userName : {} \" to \"userName : {} \"", userName.clone(), new_name.clone());
-                                    // let st = format!("Something wen wrong when trying to update profile");
-                                    return Err("Something wen wrong when trying to update profile");
-                                }
+//                                 if(update_profile(name.clone(), password.clone(), new_profile_path.clone()) == updateMessage::Success) {
+//                                     return Err("update user profile Successfully");
+//                                 } else if(update_profile(name.clone(), password.clone(), new_profile_path.clone()) == updateMessage::Unsuccess) {
+//                                     return Err("update user profile Unsuccessful");
+//                                 } else {
+//                                     // let st = format!("Something went wrong when trying to update \"userName : {} \" to \"userName : {} \"", userName.clone(), new_name.clone());
+//                                     // let st = format!("Something wen wrong when trying to update profile");
+//                                     return Err("Something wen wrong when trying to update profile");
+//                                 }
                                 
-                                /************************/
-                            Ok(RawResponse::from_vec(data, Some(file_name), content_type))
-                        }
-                        RawField::Multiple(_) => unreachable!(),
-                    }
-                }
-                None => Err("Please input a file."),
-            }
-        },
-        Find::Notfound => {
-            return Err("no user found");
-        }
-    }
+//                                 /************************/
+//                             Ok(RawResponse::from_vec(data, Some(file_name), content_type))
+//                         }
+//                         RawField::Multiple(_) => unreachable!(),
+//                     }
+//                 }
+//                 None => Err("Please input a file."),
+//             }
+//         },
+//         Find::Notfound => {
+//             return Err("no user found");
+//         }
+//     }
 
     
     
-}
+// }
 
 #[post("/uploadProfile", data = "<data>")]
 pub fn uploadprofile(key: ApiKey, content_type: &ContentType, data: Data) -> Result<RawResponse, &'static str> {
@@ -371,10 +359,10 @@ pub fn uploadprofile(key: ApiKey, content_type: &ContentType, data: Data) -> Res
                                 /*update user profile image*/
                                 
                                 //for localhost
-                                let new_profile_path = format!("http://localhost:8000/get_profile/{}", file_name);
+                                // let new_profile_path = format!("http://localhost:8000/get_profile/{}", file_name);
                                 
                                 //for server
-                                // let new_profile_path = format!("http://52.221.199.235:9000/get_profile/{}", file_name);
+                                let new_profile_path = format!("http://52.221.199.235:9000/get_profile/{}", file_name);
 
                                 if(update_profile(name.clone(), password.clone(), new_profile_path.clone()) == updateMessage::Success) {
                                     return Err("update user profile Successfully");
@@ -383,7 +371,7 @@ pub fn uploadprofile(key: ApiKey, content_type: &ContentType, data: Data) -> Res
                                 } else {
                                     // let st = format!("Something went wrong when trying to update \"userName : {} \" to \"userName : {} \"", userName.clone(), new_name.clone());
                                     // let st = format!("Something wen wrong when trying to update profile");
-                                    return Err("Something wen wrong when trying to update profile");
+                                    return Err("Something went wrong when trying to update profile");
                                 }
                                 
                                 /************************/
@@ -521,22 +509,12 @@ use crate::schema::users::columns::user_password;
 use self::models::updateItem;
 #[post("/updateName", data = "<newInfo>")]
 pub fn updateName(key: ApiKey, newInfo: Json<updateItem>) -> String {
-    
-    let token = key.into_inner();
-
-    // println!("token: {}", token);
-
-
+    let token = key.into_inner()
     let find_result = filter_user(token.clone().to_string());
-
     let decode = decode_token(token.clone().to_string());
     let userName = decode.claims.user_name;
     let userPassword = decode.claims.user_password;
     
-    
-    // let dec_res = jsonwebtoken::decode::<Claims>(&newInfo.token.clone(), "secret".as_ref(), &Validation::default()).unwrap();
-    // let userName = dec_res.claims.user_name;
-    // let userPassword = dec_res.claims.user_password;
     let new_name = newInfo.newName.clone().unwrap();
 
     if(update_name(userName.clone(), userPassword.clone(), new_name.clone()) == updateMessage::Success) {
@@ -551,12 +529,7 @@ pub fn updateName(key: ApiKey, newInfo: Json<updateItem>) -> String {
 #[post("/updatePassword", data = "<newInfo>")]
 pub fn updatePassword(key: ApiKey, newInfo: Json<updateItem>) -> String {
     let token = key.into_inner();
-
-    // println!("token: {}", token);
-
-
     let find_result = filter_user(token.clone().to_string());
-
     let decode = decode_token(token.clone().to_string());
     let userName = decode.claims.user_name;
     let userPassword = decode.claims.user_password;
@@ -575,12 +548,7 @@ pub fn updatePassword(key: ApiKey, newInfo: Json<updateItem>) -> String {
 #[post("/updateProfile", data = "<newInfo>")]
 pub fn updateProfile(key: ApiKey, newInfo: Json<updateItem>) -> String {
     let token = key.into_inner();
-
-    // println!("token: {}", token);
-
-
     let find_result = filter_user(token.clone().to_string());
-
     let decode = decode_token(token.clone().to_string());
     let userName = decode.claims.user_name;
     let userPassword = decode.claims.user_password;
@@ -598,12 +566,7 @@ pub fn updateProfile(key: ApiKey, newInfo: Json<updateItem>) -> String {
 #[post("/updateRole", data = "<newInfo>")]
 pub fn updateRole(key: ApiKey, newInfo: Json<updateItem>) -> String {
     let token = key.into_inner();
-
-    // println!("token: {}", token);
-
-
     let find_result = filter_user(token.clone().to_string());
-
     let decode = decode_token(token.clone().to_string());
     let userName = decode.claims.user_name;
     let userPassword = decode.claims.user_password;
@@ -621,16 +584,10 @@ pub fn updateRole(key: ApiKey, newInfo: Json<updateItem>) -> String {
 #[post("/updatePhone", data = "<newInfo>")]
 pub fn updatePhone(key: ApiKey, newInfo: Json<updateItem>) -> String {
     let token = key.into_inner();
-
-    // println!("token: {}", token);
-
-
     let find_result = filter_user(token.clone().to_string());
-
     let decode = decode_token(token.clone().to_string());
     let userName = decode.claims.user_name;
     let userPassword = decode.claims.user_password;
-    // println!("{:#?}", newInfo)
     let new_role = newInfo.newPhone.clone().unwrap();
 
     if(update_phone(userName.clone(), userPassword.clone(), new_role.clone()) == updateMessage::Success) {
@@ -681,7 +638,6 @@ pub fn userData(token_: Json<Token>) -> Json<_User> {
         return Json(user);
     } else {
         let user = _User::new();
-        // println!("false in back-end: {:#?}", user);
         return Json(user);
     }
 }
@@ -715,12 +671,6 @@ pub fn test_login(mut cookies: Cookies<'_>, log_info: Json<loginInfo>) -> String
     }
     return string;
 }
-
-// #[get("/a")]
-// pub fn a() -> String {
-//     String::fr
-// }
-
 
 
 #[get("/userData1")]
