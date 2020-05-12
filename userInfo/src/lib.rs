@@ -206,6 +206,11 @@ pub fn update_phone(userName: String, userPassword: String, newUserPhone: String
     }
 }
 
+#[get("/")]
+pub fn hello() -> String {
+    format!("Hello")
+}
+
 //change path to localhost
 pub fn set_default_profile(gender: String) -> String {
     let mut default_profile = String::new();

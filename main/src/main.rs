@@ -72,7 +72,8 @@ fn main() {
 			                test_login,
 			                userData1,
                             userData2,
-                            save_player_data])
+                            save_player_data,
+                            hello])
         .attach(cors)
         .attach(Template::fairing())
         .launch();
