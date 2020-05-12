@@ -509,7 +509,7 @@ use crate::schema::users::columns::user_password;
 use self::models::updateItem;
 #[post("/updateName", data = "<newInfo>")]
 pub fn updateName(key: ApiKey, newInfo: Json<updateItem>) -> String {
-    let token = key.into_inner()
+    let token = key.into_inner();
     let find_result = filter_user(token.clone().to_string());
     let decode = decode_token(token.clone().to_string());
     let userName = decode.claims.user_name;
