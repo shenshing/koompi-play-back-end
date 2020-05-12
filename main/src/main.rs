@@ -25,30 +25,41 @@ fn main() {
 
 
 
-    let allowed_origins = AllowedOrigins::some_exact(&[ 
-        "http://127.0.0.1:5500",
-        "http://localhost:3000",
-        "http://localhost:3001",
-        "http://localhost:3002",
-        "http://localhost:3003",
-        // "chrome-extension://fhbjgbiflinjbdggehcddcbncdddomop"
-    ]);
+    // let allowed_origins = AllowedOrigins::some_exact(&[ 
+    //     "http://127.0.0.1:5500",
+    //     "http://localhost:3000",
+    //     "http://localhost:3001",
+    //     "http://localhost:3002",
+    //     "http://localhost:3003",
+    //     // "chrome-extension://fhbjgbiflinjbdggehcddcbncdddomop"
+    // ]);
 
+    let allowed_origins = AllowedOrigins::all();
+
+    let allow = AllowedHeaders::all();
     let cors = CorsOptions { 
         allowed_origins,
         allowed_methods: vec![Method::Get, Method::Post].into_iter().map(From::from).collect(), 
-        allowed_headers: AllowedHeaders::some(&[
-            "Authorization",
-            "Accept",
-            "Access-Control-Allow-Origin", 
-            "token",
-	    "Content-Type",
-        ]),
+        // allowed_headers: AllowedHeaders::some(&[
+        //     "Authorization",
+        //     "Accept",
+        //     "Access-Control-Allow-Origin",
+        //     // Access-Control-Allow-Origin::ANY, 
+        //     "token",
+	    //     "Content-Type",
+        //     "*",
+        // ]),
+
+        allowed_headers: AllowedHeaders::all(),
+
+        // allowed_headers: allow,
         allow_credentials: true,
         ..Default::default()
     }
     .to_cors()
     .expect("error while building CORS");
+
+    println!("cors option: {:#?}", cors);
 
     rocket::ignite()
         .mount("/", routes![register, 

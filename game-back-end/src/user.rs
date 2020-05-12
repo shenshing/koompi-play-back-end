@@ -58,8 +58,6 @@ use rocket_contrib::json::Json;
 use crate::models::{Player, PlayResult};
 #[post("/play_info", data="<p_result>")]
 pub fn save_player_data(key: ApiKey, p_result: Json<PlayResult>) -> String {
-    // use crate::schema::users;
-    // "player data saved"
     println!("inside play_info");
 
     let token = key.into_inner();

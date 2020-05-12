@@ -644,7 +644,7 @@ pub fn userData(token_: Json<Token>) -> Json<_User> {
 
 use rocket::http::{Cookies, Cookie};
 #[post("/test_login", data = "<log_info>")]
-pub fn test_login(mut cookies: Cookies<'_>, log_info: Json<loginInfo>) -> String {
+pub fn test_login(log_info: Json<loginInfo>) -> String {
     use self::schema::users::dsl::*;
 
     let connection = establish_connection();
@@ -659,7 +659,7 @@ pub fn test_login(mut cookies: Cookies<'_>, log_info: Json<loginInfo>) -> String
                 string = generate_token(_user.user_name.to_string(),   
                                         _user.user_password.to_string(), 
                                         role.to_string());
-                cookies.add(Cookie::new("token", string.clone()));
+                // cookies.add(Cookie::new("token", string.clone()));
                 // println!("{:#?}", cookies);
                 break;
             } else {
