@@ -194,7 +194,7 @@ pub fn update_phone(userName: String, userPassword: String, newUserPhone: String
 
 #[get("/")]
 pub fn hello() -> String {
-    format!("Hello")
+    format!("Hello service running!!!")
 }
 
 //change path to localhost
