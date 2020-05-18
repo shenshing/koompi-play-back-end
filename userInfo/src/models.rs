@@ -167,7 +167,7 @@ pub fn sensitive(key: ApiKey) -> &'static str {
 
 #[derive(Deserialize)]
 pub struct loginInfo {
-    pub user_name: String,
+    pub user_email: String,
     pub user_password: String,
 }
 
@@ -178,7 +178,7 @@ impl FromDataSimple for loginInfo {
     fn from_data(req: &Request, data: Data) -> data::Outcome<Self, String> {
 
         let login_info = loginInfo {
-            user_name:  String::from("ok"),
+            user_email:  String::from("ok"),
             user_password: String::from("ok"),
         };
         
@@ -231,5 +231,25 @@ impl FromDataSimple for test_img {
         };
 
         Success(new_img)
+    }
+}
+
+
+
+#[derive(Deserialize, Serialize)]
+pub struct stringObj {
+    pub string: String
+}
+
+impl FromDataSimple for stringObj {
+    type Error = String;
+
+    fn from_data(req: &Request, data: Data) -> data::Outcome<Self, String> {
+
+        let new_obj = stringObj {
+            string: String::from("default string object"),
+        };
+
+        Success(new_obj)
     }
 }

@@ -12,17 +12,18 @@ use chrono::Utc;
 use serde::{Serialize, Deserialize};
 #[derive(Debug, Serialize, Deserialize)]
 pub struct Claims {
-    pub aud: String ,        // Optional. Audience
+    pub aud: String,        // Optional. Audience
     #[serde(with = "jwt_numeric_date")]
     pub exp: DateTime<Utc>, // Required (validate_exp defaults to true in validation). Expiration time
-    #[serde(with = "jwt_numeric_date")]
-    pub iat: DateTime<Utc>,  // Optional. Issued at
-    pub iss: String,       // Optional. Issuer
+    // #[serde(with = "jwt_numeric_date")]
+    // pub iat: DateTime<Utc>,  // Optional. Issued at
+    // pub iss: String,       // Optional. Issuer
     // #[serde(with = "jwt_numeric_date")]
     // nbf: DateTime<Utc>,  // Optional. Not Before
-    pub sub: String,        // Optional. Subject (whom token refers to)
-    pub user_name: String,
-    pub user_password: String,
+    // pub sub: String,        // Optional. Subject (whom token refers to)
+    // pub user_name: String,
+    // pub user_password: String,
+    pub user_email: String,
     pub user_role: String
 }
 
@@ -94,7 +95,7 @@ mod jwt_numeric_date {
 }
 
 use chrono::Duration;
-pub fn generate_token(login_name: String, login_password: String, login_role: String) -> String {
+pub fn generate_token(login_email: String, login_role: String) -> String {
     let issue_time: DateTime<Utc> = Utc::now();
     //declare 1day durations
     let duration = Duration::days(164);
@@ -103,19 +104,20 @@ pub fn generate_token(login_name: String, login_password: String, login_role: St
     let claims = Claims {
         aud:            String::from("koompiPlay"),
         exp:            expire_time,
-        iat:            issue_time,
-        iss:            String::from("koompiPlay"),
-        sub:            String::from("login"),
-        user_name:      login_name,
-        user_password:  login_password,
+        // iat:            issue_time,
+        // iss:            String::from("koompiPlay"),
+        // sub:            String::from("login"),
+        // user_name:      login_name,
+        // user_password:  login_password,
+        user_email:     login_email,
         user_role:      login_role,
     };
 
     let token = jsonwebtoken::encode(&Header::default(), &claims, "secret".as_ref()).unwrap();
-    return token;
+    return token;   
 }
 
 pub fn decode_token(token: String) -> jsonwebtoken::TokenData<Claims> {
-    println!("in decode token: {}", token);
+    // println!("in decode token: {}", token);
     jsonwebtoken::decode::<Claims>(&token, "secret".as_ref(), &Validation::default()).unwrap()
 }

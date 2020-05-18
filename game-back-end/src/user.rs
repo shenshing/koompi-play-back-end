@@ -52,7 +52,7 @@ pub fn playerque_to_player(playerque: PlayerQue, player: Player) -> Player {
 
 use userInfo::models::ApiKey;
 use userInfo::token::{decode_token};
-use userInfo::get_user_by_name_password;
+use userInfo::get_user_by_email;
 
 use rocket_contrib::json::Json;
 use crate::models::{Player, PlayResult};
@@ -64,10 +64,11 @@ pub fn save_player_data(key: ApiKey, p_result: Json<PlayResult>) -> String {
 
     let claim = decode_token(token.clone().to_string());
 
-    let name = claim.claims.user_name;
-    let password = claim.claims.user_password;
+    // let name = claim.claims.user_name;
+    // let password = claim.claims.user_password;
+    let email = claim.claims.user_email;
 
-    let user = get_user_by_name_password(name, password).unwrap();
+    let user = get_user_by_email(email).unwrap();
 
     let conn = establish_connection();
 
@@ -92,5 +93,3 @@ pub fn save_player_data(key: ApiKey, p_result: Json<PlayResult>) -> String {
     
     return rt_st;
 }
-
-
