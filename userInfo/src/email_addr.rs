@@ -12,7 +12,7 @@ pub fn valid_email(email: &String) -> Validate_Email {
     }
 }
 
-#[derive(PartialEq)]
+#[derive(PartialEq, Debug)]
 pub enum DuplicateEmail {
     Exist,
     Nonexist,

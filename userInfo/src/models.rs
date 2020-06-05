@@ -186,6 +186,28 @@ impl FromDataSimple for loginInfo {
     }
 }
 
+#[derive(Deserialize, Debug)]
+pub struct LoginInfo {
+    pub user_email:     String,
+    pub user_password:  String,
+    pub log_type:           String
+}
+
+impl FromDataSimple for LoginInfo {
+    type Error = String;
+
+    fn from_data(req: &Request, data: Data) -> data::Outcome<Self, String> {
+
+        let login_info = LoginInfo {
+            user_email:  String::from("ok"),
+            user_password: String::from("ok"),
+            log_type: String::from("ok"),
+        };
+        
+        Success(login_info)
+    }
+}
+
 
 
 #[derive(Deserialize, Clone)]
@@ -253,3 +275,71 @@ impl FromDataSimple for stringObj {
         Success(new_obj)
     }
 }
+
+
+// use super::schema::users;
+#[derive(Insertable, Deserialize, PartialEq, Clone, Debug)]
+// #[table_name="test_users"]
+#[table_name="users"]
+pub struct Test_Users {
+    pub user_name:          String,
+    pub user_external_id:   Option<String>,
+    pub user_gender:        String,
+    pub user_email:         Option<String>,
+    pub user_password:      Option<String>,
+    // pub create_date:    SystemTime,
+    pub user_profile:       Option<String>,
+    pub user_role:          Option<String>,
+    pub phone_number:       Option<String>,
+    pub login_type:         String
+}
+
+// use diesel::query_dsl::RunQueryDsl;
+// use diesel::sql_types::*;
+#[derive(Queryable, Deserialize, PartialEq, Debug, Serialize)]
+// #[table_name="test_users"]
+pub struct _Test_Users {
+    // #[sql_type = "Integer"]
+    pub user_id:            i32,
+    // #[sql_type = "Varchar"]
+    pub user_external_id:   Option<String>,
+    // #[sql_type = "Varchar"]
+    pub user_name:          String,
+    // #[sql_type = "Varchar"]
+    pub user_gender:        String,
+    // #[sql_type = "Varchar"]
+    pub user_email:         Option<String>,
+    // #[sql_type = "Varchar"]
+    pub user_password:      Option<String>,
+    // #[sql_type = "Timestamp"]
+    pub create_date:        SystemTime,
+    // #[sql_type = "Varchar"]
+    pub user_profile:       Option<String>,
+    // #[sql_type = "Varchar"]
+    pub user_role:          Option<String>,
+    // #[sql_type = "Varchar"]
+    pub phone_number:       Option<String>,
+    // #[sql_type = "Varchar"]
+    pub login_type:         String
+}
+
+impl _Test_Users {
+    pub fn new() -> Self {
+        let time = SystemTime::now();
+        _Test_Users {
+            user_id:            1i32,
+            user_external_id:   Some(String::from("default")),
+            user_name:          String::from("default"),
+            user_gender:        String::from("default"),
+            user_email:         Some(String::from("default")),
+            user_password:      Some(String::from("default")),
+            create_date:        time,
+            user_profile:       Some(String::from("default")),
+            user_role:          Some(String::from("default")),
+            phone_number:       Some(String::from("default")),
+            login_type:         String::from("default")
+        }
+    }
+}
+
+//  user_id,user_external_id,user_name,user_gender,user_email,user_password,create_date         |                                                    user_profile                                                     | user_role | phone_number | login_type 
