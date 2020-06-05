@@ -75,7 +75,7 @@ pub fn save_player_data(key: ApiKey, p_result: Json<PlayResult>) -> String {
     let player_save = Player {
         playername: user.user_name,
         score:      p_result.into_inner().score,
-        email:      user.user_email
+        email:      user.user_email.unwrap()
     };
 
     let save_res = save_user_to_db(&conn, player_save);

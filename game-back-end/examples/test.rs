@@ -17,7 +17,7 @@ use game_back_end::models::{PlayerQue};
 extern crate rocket_cors;
 
 extern crate userInfo;
-use userInfo::get_user_by_name_password;
+// use userInfo::get_user_by_name_password;
 
 
 fn main() {
