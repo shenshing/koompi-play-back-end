@@ -126,9 +126,6 @@ fn main() {
         .attach(Template::fairing())
         .launch(); 
 
-    // let token = String::from("eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJrb29tcGlQbGF5IiwiZXhwIjoxNjA1NTA2ODg1LCJ1c2VyX2VtYWlsIjoic2hlbnNoaW5nMjAyNUBnbWFpbC5jb20iLCJ1c2VyX3JvbGUiOiJVc2VyIn0.xr2IwjbjOymLv8yQl1OM1b0gQ4OGu3lRx4NWY6VglvA");
-    // let result = filter_user1(token);
-    // println!("{:#?}", result);
 
     
 }
