@@ -98,9 +98,9 @@ use chrono::Duration;
 pub fn generate_token(login_email: String, login_role: String) -> String {
     let issue_time: DateTime<Utc> = Utc::now();
     //declare 1day durations
-    // let duration = Duration::days(1);
+    let duration = Duration::days(1);
     // let duration = Duration::seconds(10i64);
-    let duration = Duration::minutes(5i64);
+    // let duration = Duration::minutes(5i64);
     let expire_time = issue_time.checked_add_signed(duration).unwrap();
 
     let claims = Claims {
