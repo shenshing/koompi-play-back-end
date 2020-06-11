@@ -98,7 +98,9 @@ use chrono::Duration;
 pub fn generate_token(login_email: String, login_role: String) -> String {
     let issue_time: DateTime<Utc> = Utc::now();
     //declare 1day durations
-    let duration = Duration::days(164);
+    // let duration = Duration::days(1);
+    // let duration = Duration::seconds(10i64);
+    let duration = Duration::minutes(5i64);
     let expire_time = issue_time.checked_add_signed(duration).unwrap();
 
     let claims = Claims {
@@ -120,4 +122,26 @@ pub fn generate_token(login_email: String, login_role: String) -> String {
 pub fn decode_token(token: String) -> jsonwebtoken::TokenData<Claims> {
     // println!("in decode token: {}", token);
     jsonwebtoken::decode::<Claims>(&token, "secret".as_ref(), &Validation::default()).unwrap()
+}
+
+use serde_json::value::Value;
+use std::collections::HashSet;
+use jsonwebtoken::errors::Error;
+pub fn decode_token_result(token: String) -> Result<jsonwebtoken::TokenData<Claims>, Error> {
+    // println!("in decode token: {}", token);
+
+    // let mut aud_hashset = HashSet::new();
+    // aud_hashset.insert("koompiPlay".to_string());
+    
+    // let aud_hashset = json!("koompiPlay");
+    let aud_value = Some(serde_json::value::Value::String(String::from("koompiPlay")));
+
+    let mut validation = Validation {
+        // aud: Some(aud_hashset),
+        // aud: Some(String::from("koompiPlay")),
+        aud: aud_value,
+        ..Default::default()
+    };
+    // jsonwebtoken::decode::<Claims>(&token, "secret".as_ref(), &Validation::default())
+    jsonwebtoken::decode::<Claims>(&token, "secret".as_ref(), &validation)
 }
