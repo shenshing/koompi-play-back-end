@@ -282,11 +282,11 @@ pub fn hello() -> String {
 pub fn set_default_profile(gender: String) -> String {
     let mut default_profile = String::new();
     if(gender == String::from("Male")) {
-        default_profile = String::from("http://localhost:8000/get_profile/EOk1");
-        // default_profile = String::from("http://52.221.199.235:9000/get_profile/EOk1");
+        // default_profile = String::from("http://localhost:8000/get_profile/EOk1");
+        default_profile = String::from("http://52.221.199.235:9000/get_profile/EOk1");
     } else {
-        default_profile = String::from("http://localhost:8000/get_profile/cQrw");
-        // default_profile = String::from("http://52.221.199.235:9000/get_profile/cQrw");
+        // default_profile = String::from("http://localhost:8000/get_profile/cQrw");
+        default_profile = String::from("http://52.221.199.235:9000/get_profile/cQrw");
     }
     return default_profile;
 }
