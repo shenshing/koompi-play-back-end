@@ -1169,6 +1169,10 @@ pub fn all_type_register(user: Json<Test_Users>) -> Json<stringObj> {
     // }
 }
 
+// #[post("/verify-token")]
+// pub fn verify_token(key: ApiKey)
+
+
 use crate::models::LoginInfo;
 use crate::models::_Test_Users;
 use diesel::dsl::sql_query;
