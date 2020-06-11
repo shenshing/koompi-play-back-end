@@ -82,3 +82,51 @@ impl FromDataSimple for PlayResult {
         Success(new_result)
     }
 }
+
+#[derive(QueryableByName, Debug)]
+#[table_name="questions"]
+pub struct QADB {
+    // pub serial_id:           i32,
+    pub question_id:         i32,
+    pub question:            String,    
+    pub correct_answer:      String,
+    pub incorrect_answer1:   String,
+    pub incorrect_answer2:   String,
+    pub incorrect_answer3:   String,
+    pub incorrect_answer4:   String,
+    pub incorrect_answer5:   String
+}
+
+use super::schema::questions;
+#[derive(Debug, Insertable)]
+#[table_name="questions"]
+pub struct QandA {
+    // pub question_id:         i32,
+    pub question:            String,
+    pub correct_answer:      String,
+    pub incorrect_answer1:   String,
+    pub incorrect_answer2:   String,
+    pub incorrect_answer3:   String,
+    pub incorrect_answer4:   String,
+    pub incorrect_answer5:   String
+}
+
+#[derive(Serialize, Debug)]
+pub struct Question {
+    pub question_id:         i32,
+    pub question:            String,
+    pub correct_answer:      String,
+    pub incorrect_answer1:   String,
+    pub incorrect_answer2:   String,
+    pub incorrect_answer3:   String
+}
+
+#[derive(Serialize, Debug)]
+pub struct Question1 {
+    pub question:       String,
+    pub optionA:        String,
+    pub optionB:        String,
+    pub optionC:        String,
+    pub optionD:        String,
+    pub answer:         String
+}

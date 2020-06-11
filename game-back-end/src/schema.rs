@@ -9,6 +9,19 @@ table! {
 }
 
 table! {
+    questions (question_id) {
+        question_id -> Int4,
+        question -> Varchar,
+        correct_answer -> Varchar,
+        incorrect_answer1 -> Varchar,
+        incorrect_answer2 -> Varchar,
+        incorrect_answer3 -> Varchar,
+        incorrect_answer4 -> Varchar,
+        incorrect_answer5 -> Varchar,
+    }
+}
+
+table! {
     users (user_id) {
         user_id -> Int4,
         user_name -> Varchar,
@@ -24,5 +37,6 @@ table! {
 
 allow_tables_to_appear_in_same_query!(
     players,
+    questions,
     users,
 );
