@@ -117,7 +117,7 @@ pub fn filter_user(token: String) -> Find {
     let password = format!("%{}%", format_args!("{}", String::from("A")));
 
     let result = users.filter(user_email.like(email_pattern))
-        .filter(user_password.like(password))
+        // .filter(user_password.like(password))
         .execute(&establish_connection())
         // .get_result(&establish_connection())
         // .get_result::<_User>(&conn)
@@ -1051,6 +1051,11 @@ pub fn check_user_role(token_: Json<Token>) -> Redirect {
 use self::models::{Test_Users};
 pub fn insert_all_type_of_user(conn: &PgConnection, new_user: Test_Users) -> DuplicateEmail {
     use schema::users;
+
+    // let insert_user = Test_Users {
+    //     user_name: new_user.user_name,
+        
+    // }
 
     let insert_result = match diesel::insert_into(users::table)
         .values(new_user)
