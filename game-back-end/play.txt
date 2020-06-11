@@ -1,0 +1,27 @@
+Which year was the original Toy Story film released in the US?,	1995,	1994,	1993,	1996,	1997,	1998,	1999,	2000
+How many hearts does an octopus have?,	Three,	One,	Two,	Four,	Five,	Six,	Seven,	Eight
+Which country’s flag features a red maple leaf?,	Canada,	Cambodia,	United State,	Columbia,	Brazil,	China,	Thailand,	Vietnam
+In which year did Twitter launch?,	2006,	2007,	2008,	2005,	2004,	2003,	2002,	2001
+How many children does Queen Elizabeth have?,	Four,	Five,	Six,	Three,	Two,	Seven,	Eight,	Nine
+In what year did Channel 5 launch in the UK?,	1997,	1996,	1995,	1994,	1998,	1999,	2000,	2001
+Which animal do not make any sound?,	Giraffe,	Lion,	Tiger,	Panda,	Wolf,	Elephant,	Pig,	Monkey
+How many legs does a butterfly have?,	6,	1,	2,	3,	4,	5,	7,	8
+“One People, One State, One leader” was the policy of ...,	Hitler,	Stalin,	Lenin,	Mussolin,	Barrack Obama,	Abraham Lincoln,	Nanson Mandella,	George Washington
+Wellington Trophy is related to which game?,	Rowing,	Hockey,	Tennis,	Polo,	Football,	Boxing,	Moto, Racing,	Bowling
+Which football club win the most Uefa Champions League?,	Real Madrid,	Barcelon,	Manchester United,	Chelsea,	Bayern Munchen,	Manchester City,	Athletico Madird,	Juventus
+The National game of Japan is ...,	Sumo wrestling,	Karate,	Tennis,	Ice Hockey,	Football,	Boxing,	Swimming,	Bowling
+How many alphabet in Khmer?,	33,	30,	31,	32,	34,	35,	36,	37
+Which footballer win the most Fifa Ballon D'or?,	Leo Messi,	Cristiano Ronaldo,	Kun Aguero,	Gareth Bale,	Benzema,	Sergio Ramos,	Luis Suarez,	Neymar
+How many blue stripes are there on the U.S. flag?,	0,	7,	8,	9,	10,	11,	12,	13
+What is the color of Donald Duck’s bowtie?,	Red,	Yellow,	Blue,	White,	Purple,	Pink,	Green,	Black
+Who was the only U.S. President to resign?,	Richard Nixon,	Herbert Hoover,	George W.Bush,	Barack Obama,	Donald Trump,	Bill Clinton,	John F.Kennedy,	Jimmy Carter
+In which city can you find the Liberty Bell?,	Philadelphia,	Washington D.C,	Manhattan,	Boston,	Chicago,	Los Angeles,	Seattle,	San Francisco
+How many bones are there in the human body?,	206,	201,	202,	203,	204,	205,	207,	208
+Which famous singer released a song called “Adore You”?,	Harry Styles,	Dua Lipa,	Halsey, Shawn Mendes,	Justin Bieber,	Austin Mahone,	Britney Spears,	Sam Smith
+What language is the most spoken worldwide?,	Chinese,	English,	Spanish,	Arabic,	Thai,	Khmer,	German,	Russian
+What year did Barbie come out?,	1959,	1958,	1957,	1960,	1961,	1962,	1963,	1964
+Which social media platform came out in 2003?,	Myspace,	Twitter,	Facebook,	Tumblr,	Tinder,	Youtube,	Tik Tok,	Instagram
+Which planet in our solar system is the largest?,	Jupiter,	Earth,	Neptune,	Mars,	Saturn,	Uranus,	Mercury,	Venus
+Which boyband sings the song “I Want It That Way”?,	Backstreet Boys,	NSYNC,	New Kids On The Block,	One Direction,	Big Time Rush,	Westlife, Menudo,	Take That
+Which ocean is the largest?,	Pacific,	Indian,	Atlantic,	Arctic,	South China Sea,	North Sea,	Mediterranean Sea,	Red Sea
+Which New York City building is the tallest?,	One World Trade Center,	Empire State Building,	Statue of Liberty,	Bank of America Tower,	Chrysler Building,	The Woolworth Building,	New York Time Building,	Rockefeller Plaza
