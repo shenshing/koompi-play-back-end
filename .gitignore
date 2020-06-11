@@ -1,5 +1,6 @@
 main/target/
 userInfo/target/
+game-back-end/target/
 json-response/target/
 date-time/target/
 basic_jwt/target/
