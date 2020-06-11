@@ -127,17 +127,38 @@ pub enum ApiKeyError {
     BadCount,
 }
 
-use crate::token::decode_token;
+use jsonwebtoken::errors::ErrorKind;
+use crate::token::{decode_token, decode_token_result};
 pub struct Token(String);
-fn is_valid_token(token: &str) -> bool {
+pub fn is_valid_token(token: &str) -> bool {
 
-    let claim = decode_token(token.to_string());
+    let claim = decode_token_result(token.to_string());
+    // match claim {
+    //     ErrorKind::InvalidToken => 
+    // }
 
-    if(claim.claims.aud == String::from("koompiPlay")) {
-        return true;
-    } else {
-        return false;
+    println!("claim: {:#?}", claim);
+    match claim {
+        Ok(ok_claim) => {
+            return true;
+            // if(ok_claim.claims.aud == String::from("koompiPlay")) {
+            //     return true;
+            // } else {
+            //     return false;
+            // }
+        },
+        Err(err) => {
+            return false;
+        }
     }
+
+    // if(claim.claims.aud == String::from("koompiPlay")) {
+    //     return true;
+    // } else {
+    //     return false;
+    // }
+
+    // return true;
 
 }
 
