@@ -7,6 +7,7 @@ extern crate userInfo;
 use userInfo::insert_user;
 extern crate game_back_end;
 use self::game_back_end::user::*;
+use self::game_back_end::qa::*;
 
 extern crate diesel;
 use self::userInfo::*;
@@ -110,6 +111,7 @@ fn main() {
 
                             all_type_register,
                             all_type_login,
+                            question_for_front_end,
                             // userData1,
                             // register1,
                             // test_token,
