@@ -283,10 +283,12 @@ pub fn set_default_profile(gender: String) -> String {
     let mut default_profile = String::new();
     if(gender == String::from("Male")) {
         // default_profile = String::from("http://localhost:8000/get_profile/EOk1");
-        default_profile = String::from("http://52.221.199.235:9000/get_profile/EOk1");
+        // default_profile = String::from("http://52.221.199.235:9000/get_profile/EOk1");
+        default_profile = String::from("https://backend.rielcoin.com/get_profile/EOk1");
     } else {
         // default_profile = String::from("http://localhost:8000/get_profile/cQrw");
-        default_profile = String::from("http://52.221.199.235:9000/get_profile/cQrw");
+        // default_profile = String::from("http://52.221.199.235:9000/get_profile/cQrw");
+        default_profile = String::from("https://backend.rielcoin.com/get_profile/cQrw");
     }
     return default_profile;
 }
@@ -451,7 +453,10 @@ pub fn uploadprofile(key: ApiKey, content_type: &ContentType, data: Data) -> Res
                                 // let new_profile_path = format!("http://localhost:8000/get_profile/{}", file_name);
                                 
                                 //for server
-                                let new_profile_path = format!("http://52.221.199.235:9000/get_profile/{}", file_name);
+                                // let new_profile_path = format!("http://52.221.199.235:9000/get_profile/{}", file_name);
+
+                                //with domain
+                                let new_profile_path = format!("https://backend.rielcoin.com/get_profile/{}", file_name);;
 
                                 if(update_profile(email.clone(), new_profile_path.clone()) == updateMessage::Success) {
                                     return Err("update user profile Successfully");
