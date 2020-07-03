@@ -5,7 +5,6 @@ use crate::establish_connection;
 use rocket_contrib::json::Json;
 use serde::{Serialize, Deserialize};
 
-// #[derive(Serialize, Deserialize)]
 pub struct Datetime {
     datetime: SystemTime
 }
@@ -51,9 +50,6 @@ use diesel::sql_query;
 use diesel::query_dsl::RunQueryDsl;
 use crate::models::PlayerQue;
 pub fn query_player_by_date(duration: Duration) -> Result<Vec<PlayerQue>, String> {
-    // let query_format = format!("Select * From players Where playdate between '{}' and '{}';", 
-    //     convert_systemtime_to_string(duration.start), 
-    //     convert_systemtime_to_string(duration.end));
     println!("start: {}", duration.start.clone());
     println!("end: {}", duration.end.clone());
     let query_format = format!("Select * From players Where playdate between '{}' and '{}';", duration.start, duration.end);
@@ -96,7 +92,8 @@ pub fn find_winner(duration: Duration) -> Json<PlayerQue> {
         playername: String::from("winner"),
         score: 100i32,
         playdate: SystemTime::now(),
-        email: String::from("winner@gmail.com")
+        email: String::from("winner@gmail.com"),
+        quiz_category: String::from("quiz_category")
     };
 
     
@@ -114,7 +111,8 @@ pub fn find_winner(duration: Duration) -> Json<PlayerQue> {
         playername: win1.playername.clone(),
         score: win1.score,
         playdate: win1.playdate,
-        email: win1.email.clone()
+        email: win1.email.clone(),
+        quiz_category: win1.quiz_category.clone()
     };
 
     return Json(win);
@@ -138,10 +136,6 @@ pub fn return_top_scorer(data_json: Json<Duration>) -> Json<Vec<PlayerQue>> {
 
     Json(vec_top)
 } 
-
-
-
-
 
 
 //add-on function

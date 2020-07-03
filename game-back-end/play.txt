@@ -1,27 +1,58 @@
-Which year was the original Toy Story film released in the US?,	1995,	1994,	1993,	1996,	1997,	1998,	1999,	2000
-How many hearts does an octopus have?,	Three,	One,	Two,	Four,	Five,	Six,	Seven,	Eight
-Which country’s flag features a red maple leaf?,	Canada,	Cambodia,	United State,	Columbia,	Brazil,	China,	Thailand,	Vietnam
-In which year did Twitter launch?,	2006,	2007,	2008,	2005,	2004,	2003,	2002,	2001
-How many children does Queen Elizabeth have?,	Four,	Five,	Six,	Three,	Two,	Seven,	Eight,	Nine
-In what year did Channel 5 launch in the UK?,	1997,	1996,	1995,	1994,	1998,	1999,	2000,	2001
-Which animal do not make any sound?,	Giraffe,	Lion,	Tiger,	Panda,	Wolf,	Elephant,	Pig,	Monkey
-How many legs does a butterfly have?,	6,	1,	2,	3,	4,	5,	7,	8
-“One People, One State, One leader” was the policy of ...,	Hitler,	Stalin,	Lenin,	Mussolin,	Barrack Obama,	Abraham Lincoln,	Nanson Mandella,	George Washington
-Wellington Trophy is related to which game?,	Rowing,	Hockey,	Tennis,	Polo,	Football,	Boxing,	Moto, Racing,	Bowling
-Which football club win the most Uefa Champions League?,	Real Madrid,	Barcelon,	Manchester United,	Chelsea,	Bayern Munchen,	Manchester City,	Athletico Madird,	Juventus
-The National game of Japan is ...,	Sumo wrestling,	Karate,	Tennis,	Ice Hockey,	Football,	Boxing,	Swimming,	Bowling
-How many alphabet in Khmer?,	33,	30,	31,	32,	34,	35,	36,	37
-Which footballer win the most Fifa Ballon D'or?,	Leo Messi,	Cristiano Ronaldo,	Kun Aguero,	Gareth Bale,	Benzema,	Sergio Ramos,	Luis Suarez,	Neymar
-How many blue stripes are there on the U.S. flag?,	0,	7,	8,	9,	10,	11,	12,	13
-What is the color of Donald Duck’s bowtie?,	Red,	Yellow,	Blue,	White,	Purple,	Pink,	Green,	Black
-Who was the only U.S. President to resign?,	Richard Nixon,	Herbert Hoover,	George W.Bush,	Barack Obama,	Donald Trump,	Bill Clinton,	John F.Kennedy,	Jimmy Carter
-In which city can you find the Liberty Bell?,	Philadelphia,	Washington D.C,	Manhattan,	Boston,	Chicago,	Los Angeles,	Seattle,	San Francisco
-How many bones are there in the human body?,	206,	201,	202,	203,	204,	205,	207,	208
-Which famous singer released a song called “Adore You”?,	Harry Styles,	Dua Lipa,	Halsey, Shawn Mendes,	Justin Bieber,	Austin Mahone,	Britney Spears,	Sam Smith
-What language is the most spoken worldwide?,	Chinese,	English,	Spanish,	Arabic,	Thai,	Khmer,	German,	Russian
-What year did Barbie come out?,	1959,	1958,	1957,	1960,	1961,	1962,	1963,	1964
-Which social media platform came out in 2003?,	Myspace,	Twitter,	Facebook,	Tumblr,	Tinder,	Youtube,	Tik Tok,	Instagram
-Which planet in our solar system is the largest?,	Jupiter,	Earth,	Neptune,	Mars,	Saturn,	Uranus,	Mercury,	Venus
-Which boyband sings the song “I Want It That Way”?,	Backstreet Boys,	NSYNC,	New Kids On The Block,	One Direction,	Big Time Rush,	Westlife, Menudo,	Take That
-Which ocean is the largest?,	Pacific,	Indian,	Atlantic,	Arctic,	South China Sea,	North Sea,	Mediterranean Sea,	Red Sea
-Which New York City building is the tallest?,	One World Trade Center,	Empire State Building,	Statue of Liberty,	Bank of America Tower,	Chrysler Building,	The Woolworth Building,	New York Time Building,	Rockefeller Plaza
+When ancient Olympic games first held?,	776BC,	762BC,	755BC,	780BC,	790BC,	800BC,	history
+In which country does it has Angkor Wat temple?,	Cambodia,	Loas,	Vietnam,	Thailand,	China,	Indonesia,	history
+In which year American got independence?,	1776,	1766,	1760,	1756,	1780,	1782,	history
+Who was the king during the french revolution?,	Louis XIV,	Napoleon,	Louis X,	Louis XI,	Louis IX,	Louis XV,	history
+Who was the first to sail around the world?,	Magellan,	Francis Drake,	Columbus,	Vasco da Gama,	Leonardo da Vinci,	Christop Columbus,	history
+America was discovered in?,	1492,	1392,	1493,	1494,	1497,	1380,	history
+In which year American Independence was acknowledged by England?,	1783,	1782,	1781,	1780,	1784,	1793,	history
+When did World War 2 start?,	1939,	1965,	1945,	1937,	1938,	1950,	history
+Russian revolutionary, who founded the Communist Party was,	Vladimir Lenin,	Joseph Stalin,	Trotsky,	Karl Marx,	Georgy Malenkov,	Harry S. Truman,	history
+Who said that " Man is a political animal”?,	Aristotle,	Karl Marx,	Lenin,	Plato,	Albert Enstein,	Isaac Newton,	history
+Who was the author of the "American Declaration of Independence”?,	Jefferson,	George Washington,	Lafayette,	Thomas Paine,	Thomas Edison,	Benjamin Franklin,	history
+Who was the President of America during Americian Civil War?,	Abraham Lincoln,	Andrew Jackson,	George Washinton,	James Madison,	Jefferson,	Gorge W. Bush,	history
+What is the name first Roman Emperor?,	Augustus,	Caligula,	Nero,	Claudius,	Tiberius,	Germanicus,	history
+Who was the last Emperor of Rome?,	Romulus Augustulus,	Nero,	Julius,	Cesare,	Pope Julius II,	Giovanni Borgia,	history
+In which year Hitler became the Chancellor of Germany?,	1933,	1932,	1944,	1945,	1952,	1963,	history
+Who is known as Man of Blood and Iron?,	Bismarck,	Napoleon,	Ho Chi Minh,	Sir Walter Scott,	Lenin,	Stalin,	history
+Industrial revolution start in which country?,	England,	French,	Germany,	Italy,	America,	Spain,	history
+In which year Christoper Columbus dicovered America?,	1492,	1432,	1502,	1339,	1405,	1504,	history
+Leonardo da Vinci was born in the city of ___________,	Florence,	Rome,	Milian,	Madrid,	Amboise,	Vinci,	history
+Crimean War was started in which year?,	1853,	1857,	1864,	1862,	1870,	1845,	history
+Which of the following is the first calculating	 device?,	Abacus,	Calculator,	Turing Machine,	Pascaline,	Adding machine,	Stepped reckoner,	science
+Who invented mechanical calculator called Pascaline?,	Blaise Pascal,	Alan Turing,	Lee De Forest,	Charles Babbage,	Isac Newton,	Albert Einstein,	science
+Who amoung the following considered as the ‘the father of artificial intelligence’?,	John McCarthy,	JP Eckert,	Lee De Forest,	Charles Babbage,	Alan Turing,	Nicolas Tesla,	science
+Which was the world’s first successful electornic computer?,	ENIAC,	MacBook,	Microsoft,	PARAM,	CRAY-1,	Pascaline,	science
+Koompi computer is the product of which country in Asia?,	Cambodia,	Thailand,	Vietnam,	China,	Singapore,	Japan,	science
+Which was first virus detected on ARPANET the forerunner of the internet in the early 1970s?,	Creeper Virus,	Exe File,	Peeper Virus,	Trozen horse,	Spyware,	Adware,	science
+Anatomy is a branch of Science which deal with:,	Structore of animals and plants,	Animal behaviour,	Cells and tissues,	Functioning of body organs,	Tondon cells,	Nervous system,	science
+Oncology study of:,	Cancer,	Brids,	Soil,	Mammals,	Hunman body,	Laboratory mouse,	science
+Name an instrument used to measure the intensity of earthquakes?,	Richter Scale,	Ammeter,	Oometer,	Hyetometer,	Speedometer,	Sound levele meter,	science
+Fathometer is used to measure_______,	Ocean depth,	Earthquakes,	Rainfall,	Sound intensity,	Speed,	Hight intensity,	science
+Coranagraph is used for________,	Observing and often phtographing the sun’s corona,	Study of the viens,	Study of blood pressure,	Study of arteries,	Study of the toxic gases,	Study of cancer,	science
+Which start is at the center of Solar System?,	Sun,	Earth,	Mars,	Earth moon,	Titan,	Saturn,	science
+What the percent of the Solar System’s mass does Sun holds?,	99.8%,	99.99%,	100%,	90%,	95%,	98%,	science
+Each year, the Earth and the Moon are separated at__________,	4cm,	2cm,	6cm,	10cm,	8cm,	12cm,	science
+How much time does sun rays take to reach Earth?,	8mn,	12mn,	4mn,	6mn,	4mn,	1mn,	science
+Who is the first man who represented for the humankind on Earth was put his leg on the Surface Moon?,	Neil Armstrong,	Buzz Aldrin,	Pete Conrad,	Alan Bean,	Alan Shepard,	Edgar Mitchell,	science
+Which Star is called Earth’s satellite?,	Moon,	Sun,	Mars,	Saturn,	Venus,	Jupiter,	science
+What is the age of Moon?,	4527 billion years,	4600 billion years,	4100 billion years,	4432 billion years,	4350 billion years,	4650 billion years,	science
+How much is it,12+4+5-2+1-9= ?,	11,	12,	10,	9,	13,	16,	calculating
+Can you solve (13-2+5x7-6)x(6/2x0)= ?,	0,	106,	48,	None,	318,	23,	calculating 
+If (x+y+z)=12, xy+yz+zx=44 and xyz=48,then what is the value of x3+y3+z3= ?,	288,	104,	196,	144,	114,	124,	calculating
+If 22n-1 = 1/8n-3, then the value of n is:,	2,	3,	1,	-1,	0,	-2,	calculating
+How many two-digit numbers are divisible by 3 but not by 7?,	30,	47,	13,	26,	12,	23,	calculating
+The sum of a positive integer and its square is 2450. The positive integer is:,	49,	11,	45,	48,	50,	51,	calculating
+Which is the smallest?,	-1,	-1/2,	0,	1,	-1/3,	2,	calculating
+Combine terms: 12a+26b-4b-16a.,	-4a+22b,	4a+22b,	-28a+30b,	28a+30b,	6a+13b-2b-8a,	3a+13/2b-b-4a,	calculating
+Simplify: (4-5)-(13-18+2).,	2,	-1,	-2,	1,	2,	-3,	calculating
+What is |-26|?,	26,	-26,	0,	1,	(-26)2,	-5.1,	calculating
+Multiply: (x-4)(x+5)= ?,	x2+x-20,	x2+5x-20,	x2+4x-20,	x2+x-20,	x2-x+20,	x2-5x-20,	calculating
+Find the value of 3+2 x (8-3)= ?,	13,	17,	25,	15,	10,	5,	calculating
+The two straight lines in the same plane which never meet are called______,	parallel lines,	angles,	transversal lines,	vertex,	Acute lines,	Area of line,	calculating
+The locus of a point in a plane equidistant from a fixex point as known as_______,	circle,	hexagon,	retangle,	triangle,	aquare,	angles,	calculating
+The opposite angles of any quadrilateral inscribed in a circle are______,	supplementary,	tangent,	complementary,	reflective,	wave,	rotation,	calculating
+A line that intersects two lines in different points is known as_______,	transversal lines,	vertex,	parallel lines,	angles,	Acute lines,	Area of line,	calculating
+A tangent line intersects the circle at_______,	single point,	no point,	three points,	two points,	not at all,	four points,	calculating
+The quotient of two numbers or algebric expressions is called a_______,	fraction,	ratio,	proportion,	variation,	percentage,	decimal,	calculating
+Thermal energy from a hot body flows to a cold body in the farm of______,	heat,	sound,	waves,	signal,	signal & waves,	None,	calculating
+If the cross sectional area is larger the rate of flow of heat will be______,	greater,	zero,	constant,	smaller,	smaller & greater,	None,	calculating
