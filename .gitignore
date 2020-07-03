@@ -1,10 +1,4 @@
 main/target/
 userInfo/target/
 game-back-end/target/
-json-response/target/
-date-time/target/
-basic_jwt/target/
-json_web_token/target/
-duration/target/
-upload_retrieve_img/target/
-RESEARCH/mul_table/target/
+zeetomic/target/

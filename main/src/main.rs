@@ -11,7 +11,6 @@ use self::game_back_end::qa::*;
 
 extern crate diesel;
 use self::userInfo::*;
-// use self::userInfo::static_rocket_route_info_for_uploadProfile;
 extern crate rocket_cors;
 
 use rocket_contrib::templates::Template;
@@ -23,17 +22,6 @@ use rocket_cors::{
 };
 
 fn main() {
-
-
-
-    // let allowed_origins = AllowedOrigins::some_exact(&[ 
-    //     "http://127.0.0.1:5500",
-    //     "http://localhost:3000",
-    //     "http://localhost:3001",
-    //     "http://localhost:3002",
-    //     "http://localhost:3003",
-    //     // "chrome-extension://fhbjgbiflinjbdggehcddcbncdddomop"
-    // ]);
 
     let allowed_origins = AllowedOrigins::all();
 
