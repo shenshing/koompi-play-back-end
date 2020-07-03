@@ -22,20 +22,6 @@ pub fn establish_connection() -> PgConnection {
 }
 
 use self::email_addr::DuplicateEmail;
-// use self::models::{User};
-// pub fn insert_user(conn: &PgConnection, user: User) -> DuplicateEmail {
-//     use schema::users;
-
-//     let insert_result = match diesel::insert_into(users::table)
-//         .values(user)
-//         .execute(conn) {
-//             Ok(ok) => DuplicateEmail::Nonexist,
-//             Err(err) => DuplicateEmail::Exist,
-//     };
-//     return insert_result;
-// }
-
-// use self::models::{Test_Users};
 pub fn insert_user(conn: &PgConnection, user: Test_Users) -> DuplicateEmail {
     use schema::users;
 
@@ -84,9 +70,6 @@ use self::diesel::prelude::*;
 use crate::schema::users;
 pub fn remove_user(userEmail: String) -> deleteMessage {
     use self::schema::users::dsl::*;
-
-    // let name_pattern = format!("%{}%", format_args!("{}", userName));
-    // let password_pattern = format!("%{}%", format_args!("{}", userPassword));
     let email_pattern = format!("%{}%", format_args!("{}", userEmail));
 
     let connection = establish_connection();
@@ -109,18 +92,12 @@ pub fn filter_user(token: String) -> Find {
     use self::schema::users::dsl::{users, user_email};
     let dec_token = decode_token(token);
 
-    // println!("{:#?}", dec_token);
-    // let name = dec_token.claims.user_name;
-    // let password = dec_token.claims.user_password;
     let email = dec_token.claims.user_email;
     let email_pattern = format!("%{}%", format_args!("{}", email));
     let password = format!("%{}%", format_args!("{}", String::from("A")));
 
     let result = users.filter(user_email.like(email_pattern))
-        // .filter(user_password.like(password))
         .execute(&establish_connection())
-        // .get_result(&establish_connection())
-        // .get_result::<_User>(&conn)
         .unwrap();
     if(result == 0) {
         return Find::Notfound;
@@ -130,22 +107,14 @@ pub fn filter_user(token: String) -> Find {
 }
 
 pub fn filter_user1(token: String) -> Find {
-    // use self::schema::users::dsl::{test_users, user_email};
     use self::schema::users::dsl::*;
     let dec_token = decode_token(token);
 
-    // println!("{:#?}", dec_token);
-    // let name = dec_token.claims.user_name;
-    // let password = dec_token.claims.user_password;
     let email = dec_token.claims.user_email;
     let email_pattern = format!("%{}%", format_args!("{}", email));
-    // let password = format!("%{}%", format_args!("{}", String::from("A")));
 
     let result = users.filter(user_email.like(email_pattern))
-        // .filter(user_password.like(password))
         .execute(&establish_connection())
-        // .get_result(&establish_connection())
-        // .get_result::<_User>(&conn)
         .unwrap();
     if(result == 0) {
         return Find::Notfound;
@@ -160,7 +129,6 @@ pub fn get_user_by_email(email: String) -> Result<_Test_Users, diesel::result::E
     let password = String::from("hello");
 
     match users.filter(user_email.eq(email))
-        // .filter(user_password.eq(password))
         .get_result::<_Test_Users>(&establish_connection()) {
         Ok(user) => return Ok(user),
         Err(err) => return Err(err),
@@ -182,7 +150,6 @@ pub fn update_name(userEmail: String, newUserName: String) -> updateMessage {
     let email_pattern = format!("%{}%", format_args!("{}", userEmail));
 
     let update_name = diesel::update(users.filter(user_email.like(email_pattern)))
-        // .filter(user_password.eq(userPassword)))
         .set(user_name.eq(newUserName))
         .execute(&establish_connection());
 
@@ -201,7 +168,6 @@ pub fn update_password(userEmail: String, newUserPassword: String) -> updateMess
     let email_pattern = format!("%{}%", format_args!("{}", userEmail));
 
     let update_password = diesel::update(users.filter(user_email.like(email_pattern)))
-        // .filter(user_password.eq(userPassword)))
         .set(user_password.eq(newUserPassword))
         .execute(&establish_connection());
 
@@ -220,7 +186,6 @@ pub fn update_profile(userEmail: String, newUserProfile: String) -> updateMessag
     let email_pattern = format!("%{}%", format_args!("{}", userEmail));
 
     let update_profile = diesel::update(users.filter(user_email.like(email_pattern)))
-            // .filter(user_password.eq(userPassword)))
         .set(user_profile.eq(newUserProfile))
         .execute(&establish_connection());
 
@@ -239,7 +204,6 @@ pub fn update_role(userEmail: String, newUserRole: String) -> updateMessage {
     let email_pattern = format!("%{}%", format_args!("{}", userEmail));
 
     let update_role = diesel::update(users.filter(user_email.like(email_pattern)))
-        // .filter(user_password.eq(userPassword)))
         .set(user_role.eq(newUserRole))
         .execute(&establish_connection());
 
@@ -258,7 +222,6 @@ pub fn update_phone(userEmail: String, newUserPhone: String) -> updateMessage {
     let email_pattern = format!("%{}%", format_args!("{}", userEmail));
 
     let update_phone = diesel::update(users.filter(user_email.like(email_pattern)))
-        // .filter(user_password.eq(userPassword)))
         .set(phone_number.eq(newUserPhone))
         .execute(&establish_connection());
 
@@ -271,23 +234,15 @@ pub fn update_phone(userEmail: String, newUserPhone: String) -> updateMessage {
     }
 }
 
-// pub fn save
-
 #[get("/")]
 pub fn hello() -> String {
     format!("Hello")
 }
-
-//change path to localhost
 pub fn set_default_profile(gender: String) -> String {
     let mut default_profile = String::new();
     if(gender == String::from("Male")) {
-        // default_profile = String::from("http://localhost:8000/get_profile/EOk1");
-        // default_profile = String::from("http://52.221.199.235:9000/get_profile/EOk1");
         default_profile = String::from("https://backend.rielcoin.com/get_profile/EOk1");
     } else {
-        // default_profile = String::from("http://localhost:8000/get_profile/cQrw");
-        // default_profile = String::from("http://52.221.199.235:9000/get_profile/cQrw");
         default_profile = String::from("https://backend.rielcoin.com/get_profile/cQrw");
     }
     return default_profile;
@@ -308,106 +263,19 @@ use rocket::Data;
 use rocket::http::ContentType;
 
 
-//upload to specific users
-// #[post("/uploadto/<token>", data = "<data>")]
-// pub fn upload_profile(content_type: &ContentType, data: Data, token: String) -> Result<RawResponse, &'static str> {
-    
-//     let token_decode = decode_token(token.clone());
-//     let name =  token_decode.claims.user_name;
-//     let password = token_decode.claims.user_password;
-
-//     let res = filter_user(token);
-    
-//     match res {
-//         Find::Found => {
-//             //user found
-//             let mut options = MultipartFormDataOptions::new();
-//             options.allowed_fields.push(
-//                 MultipartFormDataField::raw("image")
-//                     .size_limit(32 * 1024 * 1024)
-//                     .content_type_by_string(Some(mime::IMAGE_STAR))
-//                     .unwrap(),
-//             );
-
-//             let mut multipart_form_data = match MultipartFormData::parse(content_type, data, options) {
-//                 Ok(multipart_form_data) => multipart_form_data,
-//                 Err(err) => {
-//                     match err {
-//                         MultipartFormDataError::DataTooLargeError(_) => {
-//                             return Err("The file is too large.")
-//                         }
-//                         MultipartFormDataError::DataTypeError(_) => {
-//                             return Err("The file is not an image.")
-//                         }
-//                         _ => panic!("{:?}", err),
-//                     }
-//                 }
-//             };
-
-//             let image = multipart_form_data.raw.remove("image");
-
-//             match image {
-//                 Some(image) => {
-//                     match image {
-//                         RawField::Single(raw) => {
-//                             let content_type = raw.content_type;
-//                             let file_name = format!("{}", PasteID::new(name_length));
-//                             let data = raw.raw;
-                            
-//                             let file_fmt = format!("../userInfo/image-bank/{}", file_name);
-//                             let mut file = File::create(file_fmt).unwrap();
-                            
-//                             let write_res = file.write(&data[0..]).unwrap();
-//                                 /*update user profile image*/
-//                                 let new_profile_path = format!("http://localhost:8000/get_profile/{}", file_name);
-                                
-//                                 if(update_profile(name.clone(), password.clone(), new_profile_path.clone()) == updateMessage::Success) {
-//                                     return Err("update user profile Successfully");
-//                                 } else if(update_profile(name.clone(), password.clone(), new_profile_path.clone()) == updateMessage::Unsuccess) {
-//                                     return Err("update user profile Unsuccessful");
-//                                 } else {
-//                                     // let st = format!("Something went wrong when trying to update \"userName : {} \" to \"userName : {} \"", userName.clone(), new_name.clone());
-//                                     // let st = format!("Something wen wrong when trying to update profile");
-//                                     return Err("Something wen wrong when trying to update profile");
-//                                 }
-                                
-//                                 /************************/
-//                             Ok(RawResponse::from_vec(data, Some(file_name), content_type))
-//                         }
-//                         RawField::Multiple(_) => unreachable!(),
-//                     }
-//                 }
-//                 None => Err("Please input a file."),
-//             }
-//         },
-//         Find::Notfound => {
-//             return Err("no user found");
-//         }
-//     }
-
-    
-    
-// }
-
 use crate::models::ApiKey;
 #[post("/uploadProfile", data = "<data>")]
 pub fn uploadprofile(key: ApiKey, content_type: &ContentType, data: Data) -> Result<RawResponse, &'static str> {
     
     let token = key.into_inner();
 
-
-    // let find_result = filter_user(token.clone().to_string());
-
     let decode = decode_token(token.clone().to_string());
-    // let name = decode.claims.user_name;
-    // let password = decode.claims.user_password;
     let email = decode.claims.user_email;
 
     let res = filter_user(token);
     
     match res {
         Find::Found => {
-            //user found
             let mut options = MultipartFormDataOptions::new();
             options.allowed_fields.push(
                 MultipartFormDataField::raw("image")
@@ -443,7 +311,6 @@ pub fn uploadprofile(key: ApiKey, content_type: &ContentType, data: Data) -> Res
                             
                             let file_fmt = format!("../userInfo/image-bank/{file_name}", file_name = file_name);
                             println!("file_fmt upload: {}", file_fmt);
-                            // let file_fmt = format!("../userInfo/image-bank/{}", file_name);
                             let mut file = File::create(file_fmt).unwrap();
                             
                             let write_res = file.write(&data[0..]).unwrap();
@@ -463,8 +330,6 @@ pub fn uploadprofile(key: ApiKey, content_type: &ContentType, data: Data) -> Res
                                 } else if(update_profile(email.clone(), new_profile_path.clone()) == updateMessage::Unsuccess) {
                                     return Err("update user profile Unsuccessful");
                                 } else {
-                                    // let st = format!("Something went wrong when trying to update \"userName : {} \" to \"userName : {} \"", userName.clone(), new_name.clone());
-                                    // let st = format!("Something wen wrong when trying to update profile");
                                     return Err("Something went wrong when trying to update profile");
                                 }
                                 
@@ -500,8 +365,6 @@ use rocket_raw_response::RawResponse;
 
 #[get("/get_profile/<id>")]
 pub fn get_profile(id: PasteID<'_>) -> Result<RawResponse, &'static str> {
-    // let file_format = format!("image-bank/{id}", id = id);
-    // let file_format = format!("image-bank/{id}", id = id);
     let file_format = format!("../userInfo/image-bank/{id}", id = id);
     println!("file_fmt get: {}", file_format);
     let mut file = File::open(file_format).unwrap();
@@ -526,49 +389,6 @@ use serde::{Deserialize, Serialize};
 pub struct Token {
     token: String,
 }
-
-// #[post("/test_token", data = "<token>")]
-// pub fn test_token(token: Json<Token>) -> Json<Token> {
-//     Json(
-//         Token {
-//             token: String::from("hello")
-//         }
-//     )
-// }
-
-
-
-// #[post("/register", data = "<user>")]
-// pub fn register(user: Json<User>) -> Json<stringObj> { 
-//     let conn = establish_connection();
-    
-//     use diesel::select;
-//     let now = select(diesel::dsl::now).get_result::<SystemTime>(&conn).unwrap();
-
-//     let new_user = user.into_inner();
-
-//     println!("new_user : {:#?}", new_user);
-
-//     if(insert_user(&conn, new_user.clone()) == DuplicateEmail::Nonexist) {
-//         return Json(
-//             stringObj {
-//                 string: format!("Register complete!!!"),
-//             }
-//         )
-//     } else if (insert_user(&conn, new_user.clone()) == DuplicateEmail::Exist) {
-//         return Json(
-//             stringObj {
-//                 string: format!("Email already exist"),
-//             }
-//         )
-//     } else {
-//         return Json(
-//             stringObj {
-//                 string: format!("Something went wrong when trying to Registering"),
-//             }
-//         )
-//     }
-// }
 
 #[post("/register", data = "<user>")]
 pub fn register(user: Json<Test_Users>) -> Json<stringObj> { 
@@ -602,39 +422,9 @@ pub fn register(user: Json<Test_Users>) -> Json<stringObj> {
     }
 }
 
-// use self::models::{loginInfo};
-// #[post("/login", data = "<log_info>")]
-// pub fn login(log_info: Json<loginInfo>) -> Json<String> {
-//     use self::schema::users::dsl::*;
-
-//     let connection = establish_connection();
-
-//     let user_list = get_user(&connection);
-//     let mut string = String::new();
-
-//     for _user in user_list.iter() {
-//         if(_user.user_email.trim() == log_info.user_email.trim()) {
-//             if(_user.user_password.trim() == log_info.user_password.trim()) {
-//                 let role = _user.user_role.as_ref().unwrap();
-//                 string = generate_token(_user.user_email.to_string(),   
-//                                         // _user.user_password.to_string(), 
-//                                         role.to_string());
-//                 break;
-//             } else {
-//                 string = format!("Log in Failed");  
-//             }
-//         } else {
-//             string = format!("Log in Failed");
-//         }
-//     }
-//     return Json(string);
-// }
 
 #[post("/delete")]
 pub fn self_destroy(key: ApiKey) -> Json<stringObj> {
-    // let dec_res = decode_token(token_.token.clone());
-    // let email = dec_res.claims.user_email;
-
     let token = key.into_inner();
     let dec_res = decode_token(token.clone());
     let email = dec_res.claims.user_email;
@@ -784,8 +574,6 @@ pub fn updatePhone(key: ApiKey, newInfo: Json<updateItem>) -> Json<stringObj> {
     let token = key.into_inner();
     let find_result = filter_user(token.clone().to_string());
     let decode = decode_token(token.clone().to_string());
-    // let userName = decode.claims.user_name;
-    // let userPassword = decode.claims.user_password;
     let userEmail = decode.claims.user_email;
     let new_phone = newInfo.newPhone.clone().unwrap();
 
@@ -810,49 +598,18 @@ pub fn updatePhone(key: ApiKey, newInfo: Json<updateItem>) -> Json<stringObj> {
     }
 }
 
+#[post("/request", data="<st>")]
+pub fn return_st(st: Json<stringObj>) -> String {
+    // String::from("Successful")
+    format!("Successfull {}", st.string)
+}
+    
 #[get("/display")]
 pub fn displayUser() -> String {
     let from_db = get_user(&establish_connection());
     let json_str = serde_json::to_string_pretty(&from_db).unwrap();
     return json_str;
 }
-
-//eg: localhost::8000/shing (display username after route to get "user information")
-// #[post("/userData", data = "<token_>")]
-// pub fn userData(token_: Json<Token>) -> Json<_User> {
-//     use self::schema::users::dsl::{users, user_email};
-//     let find_result = filter_user(token_.token.clone());
-
-//     let decode = decode_token(token_.token.clone());
-//     // let name = decode.claims.user_name;
-//     // let password = decode.claims.user_password;
-//     let email = decode.claims.user_email;
-
-
-    // let user = _User {
-    //     user_id: 1i32,
-    //     user_name: String::from("default username"),
-    //     user_gender: String::from("default gender"),
-    //     user_email: String::from("default@email.com"),
-    //     user_password: String::from("default password"),
-    //     create_date: SystemTime::now(),
-    //     user_profile: Some(String::from("default profile")),
-    //     user_role: Some(String::from("default role")),
-    //     phone_number: String::from("default number")
-    // };
-
-//     if(find_result == Find::Found) {
-//         let user = users.filter(user_email.like(email))
-//         // .filter(user_password.like(password))
-//         .get_result(&establish_connection())
-//         .unwrap();
-//         println!("true in back-end: {:#?}", user);
-//         return Json(user);
-//     } else {
-//         let user = _User::new();
-//         return Json(user);
-//     }
-// }
 
 use crate::models::loginInfo;
 use rocket::http::{Cookies, Cookie};
@@ -869,11 +626,8 @@ pub fn login(log_info: Json<loginInfo>) -> Json<stringObj> {
         if(_user.user_email.clone().unwrap() == log_info.user_email.trim()) {
             if(_user.user_password.clone().unwrap().clone() == log_info.user_password.trim()) {
                 let role = _user.user_role.as_ref().unwrap();
-                string = generate_token(_user.user_email.clone().unwrap(),   
-                                        // _user.user_password.to_string(), 
+                string = generate_token(_user.user_email.clone().unwrap(), 
                                         role.to_string());
-                // cookies.add(Cookie::new("token", string.clone()));
-                // println!("{:#?}", cookies);
                 break;
             } else {
                 string = format!("Log in Failed");  
@@ -888,72 +642,9 @@ pub fn login(log_info: Json<loginInfo>) -> Json<stringObj> {
 }
 
 
-// #[get("/userData1")]
-// pub fn userData1(cookies: Cookies<'_>) -> Json<_User> {
-//     use self::schema::users::dsl::{users, user_email};
-//     println!("{:#?}", cookies);
-//     let token = cookies.get("token").unwrap().value();
-//     println!("token: {}", token.clone());
-
-
-//     let find_result = filter_user(token.clone().to_string());
-
-//     let decode = decode_token(token.clone().to_string());
-//     // let name = decode.claims.user_name;
-//     // let password = decode.claims.user_password;
-//     let email = decode.claims.user_email;
-
-//     if(find_result == Find::Found) {
-//         let user = users.filter(user_email.like(email))
-//         // .filter(user_password.like(password))
-//         .get_result(&establish_connection())
-//         .unwrap();
-//         println!("true in back-end: {:#?}", user);
-//         return Json(user);
-//     } else {
-//         let user = _User::new();
-//         return Json(user);
-//     }
-// }
-
-// use rocket::Request;
-// use self::models::ApiKey;
-// #[get("/userData")]
-// pub fn userData(key: ApiKey) -> Json<_User>{
-//     use self::schema::users::dsl::{users, user_email};
-    
-//     let token = key.into_inner();
-
-//     println!("token: {}", token);
-
-
-//     let find_result = filter_user(token.clone().to_string());
-
-//     let decode = decode_token(token.clone().to_string());
-//     // let name = decode.claims.user_name;
-//     // let password = decode.claims.user_password;
-//     let email = decode.claims.user_email;
-
-//     let email_pattern = format!("%{}%", format_args!("{}", email));
-
-
-//     if(find_result == Find::Found) {
-//         let user = users.filter(user_email.like(email_pattern))
-//         // .filter(user_password.like(password))
-//         .get_result(&establish_connection())
-//         .unwrap();
-//         println!("true in back-end: {:#?}", user);
-//         return Json(user);
-//     } else {
-//         let user = _User::new();
-//         return Json(user);
-//     }
-// }
-
 // use self::models::ApiKey;
 #[get("/userData")]
 pub fn userData(key: ApiKey) -> Json<_Test_Users>{
-    // use self::schema::users::dsl::{test_users, user_email};
     use self::schema::users::dsl::*;
     
     let token = key.into_inner();
@@ -964,18 +655,12 @@ pub fn userData(key: ApiKey) -> Json<_Test_Users>{
     let find_result = filter_user1(token.clone().to_string());
 
     let decode = decode_token(token.clone().to_string());
-    // let name = decode.claims.user_name;
-    // let password = decode.claims.user_password;
     let email = decode.claims.user_email;
 
     let email_pattern = format!("%{}%", format_args!("{}", email));
 
 
     if(find_result == Find::Found) {
-        // let user = test_users.filter(user_email.like(email_pattern))
-        // // .filter(user_password.like(password))
-        // .get_result(&establish_connection())
-        // .unwrap();
 
         let user = users.filter(user_email.eq(email))
             .get_result::<_Test_Users>(&establish_connection())
@@ -983,13 +668,6 @@ pub fn userData(key: ApiKey) -> Json<_Test_Users>{
         println!("true in back-end: {:#?}", user);
         return Json(user);
     } else {
-        // let user = _User::new();
-        // let user = _Test_Users {
-        //     user_id:            1i32,
-        //     user_external_id:   Some(String::from("default")),
-        //     user_name:          String::from("default")
-        // }
-
         let user = _Test_Users::new();
         return Json(user);
     }
@@ -1029,10 +707,6 @@ use rocket::response::Redirect;
 use token::decode_token;
 #[post("/checking", data = "<token_>")]
 pub fn check_user_role(token_: Json<Token>) -> Redirect {
-    //I don't why it has "token=a;sldkfja;sldjfa;lsdf" 
-    //when i try to send token from postman so i need to delete some string before
-    //token to make it become ValidToken
-    // let dec_res = jsonwebtoken::decode::<Claims>(&ok_token, "secret".as_ref(), &Validation::default()).unwrap();
     
     let dec_res = decode_token(token_.token.clone());
     let user_role = dec_res.claims.user_role;
@@ -1057,10 +731,6 @@ use self::models::{Test_Users};
 pub fn insert_all_type_of_user(conn: &PgConnection, new_user: Test_Users) -> DuplicateEmail {
     use schema::users;
 
-    // let insert_user = Test_Users {
-    //     user_name: new_user.user_name,
-        
-    // }
 
     let insert_result = match diesel::insert_into(users::table)
         .values(new_user)
@@ -1087,7 +757,6 @@ pub fn all_type_register(user: Json<Test_Users>) -> Json<stringObj> {
 
     let new_user = user.into_inner();
     let log_type = new_user.clone().login_type;
-    // println!("new_user : {:#?}", user.into_inner().clone());
     
     //check what type of login user user
     if (log_type.clone() == String::from("local")) {
@@ -1100,23 +769,8 @@ pub fn all_type_register(user: Json<Test_Users>) -> Json<stringObj> {
         }
         return is_register_complete(new_user.clone());
     } else if (log_type.clone() == String::from("facebook")) {
-        // println!("b");
-        // if (new_user.clone().user_password.unwrap().is_empty()) {
-        //         return Json(
-        //         stringObj {
-        //             string: format!("Something went wrong!!!"),
-        //         }
-        //     )
-        // }
         return is_register_complete(new_user.clone());
     } else if (log_type.clone() == String::from("google")) {
-        // if (!new_user.clone().user_password.unwrap().is_empty()) {
-        //         return Json(
-        //         stringObj {
-        //             string: format!("Something went wrong!!!"),
-        //         }
-        //     )
-        // }
         return is_register_complete(new_user.clone());
     } else if (log_type.clone() == String::from("gmail")) {
         if (!new_user.clone().user_password.unwrap().is_empty()) {
@@ -1127,29 +781,7 @@ pub fn all_type_register(user: Json<Test_Users>) -> Json<stringObj> {
             )
         }
         return is_register_complete(new_user.clone());
-    } 
-    // else if (log_type.clone() == String::from("telegram")) {
-    //     // println!("e");
-        
-    //     if(new_user.clone().phone_number.unwrap().is_empty()) {
-    //         return Json(
-    //             stringObj {
-    //                 string: format!("You don't provide phone number"),
-    //             }
-    //         )
-    //     }
-
-    //     /*note:
-    //         - check if phone_number is duplicated for login_type = "telegram"
-    //     */
-    //     let statement = format!("Select * From test_users Where login_type = 'telegram';");
-
-    //     return Json(
-    //             stringObj {
-    //                 string: format!("Something went wrong!!!"),
-    //             }
-    //         )
-    // } 
+    }
     else {
         return Json(
             stringObj {
@@ -1157,30 +789,8 @@ pub fn all_type_register(user: Json<Test_Users>) -> Json<stringObj> {
             }
         )
     }
-
-    // if(insert_all_type_of_user(&conn, new_user.clone()) == DuplicateEmail::Nonexist) {
-    //     return Json(
-    //         stringObj {
-    //             string: format!("Register complete!!!"),
-    //         }
-    //     )
-    // } else if (insert_all_type_of_user(&conn, new_user.clone()) == DuplicateEmail::Exist) {
-    //     return Json(
-    //         stringObj {
-    //             string: format!("Email already exist"),
-    //         }
-    //     )
-    // } else {
-    //     return Json(
-    //         stringObj {
-    //             string: format!("Something went wrong when trying to Registering"),
-    //         }
-    //     )
-    // }
 }
 
-// #[post("/verify-token")]
-// pub fn verify_token(key: ApiKey)
 
 
 use crate::models::LoginInfo;
@@ -1188,17 +798,11 @@ use crate::models::_Test_Users;
 use diesel::dsl::sql_query;
 #[post("/all_login", data="<user_data>")]
 pub fn all_type_login(user_data: Json<Test_Users>) -> Json<stringObj> {
-
-    // use self::schema::test_users::dsl::{test_users, user_email};
     use self::schema::users::dsl::*;
     let conn = establish_connection();
     let mut string = String::new();
 
     let data = user_data.into_inner();
-
-    // if()
-
-    // println!("{:#?}", data);
     if (data.login_type.clone() == String::from("local")) {
         println!("User login with local login");
 
@@ -1207,21 +811,6 @@ pub fn all_type_login(user_data: Json<Test_Users>) -> Json<stringObj> {
 
         println!("{}", email_get);
         println!("{}", password_get);
-
-        // match test_users.filter(user_email.like(email_get))
-        //     .filter(user_password.like(password_get))
-        //     .get_result::<_Test_Users>(&conn) {
-        //     // .execute(&conn) {
-        //         Ok(user) => {
-        //             println!("local ok");
-        //             // string = generate_token(user.user_email.clone().unwrap(), user.user_gender.clone());
-        //         },
-        //         Err(err) => {
-        //             println!("local error");
-        //             string = format!("Incorrect email and password!!!!!");
-        //         }
-        // }
-
 
         match users.filter(user_email.eq(email_get))
             .filter(user_password.eq(password_get))
@@ -1235,36 +824,16 @@ pub fn all_type_login(user_data: Json<Test_Users>) -> Json<stringObj> {
                 string = format!("Incorrect Email or Password");
             }
         }
-
-        // let statement = format!("Select * From test_users Where user_email = '{}' And user_password = '{}';", email_get, password_get);
-        // match sql_query(statement)
-        //     .load::<_Test_Users>(&conn) {
-        //     Ok(user) => {
-        //         println!("local ok");
-        //         println!("{:#?}", user);
-        //     },
-        //     Err(err) => {
-        //         println!("local error");
-        //         println!("{}", err);
-        //     }
-        // }
     } else if (data.login_type.clone() == String::from("facebook")) {
         println!("User login with facebook");
         let email_get = data.user_email.clone().unwrap();
-        //query in db if user exist or not
-        //if exist => generate token for it
-        //if notexist => create a new user => auto login 
-        //_Test_Users
         match users.filter(user_email.eq(email_get.clone()))
             .get_result::<_Test_Users>(&conn) {
             Ok(user) => {
-                //generate token
-                // println!("ok part: {:#?}", user);
                 println!("facebook ok");
                 string = generate_token(user.user_email.clone().unwrap(), user.user_role.unwrap());
             },
             Err(err) => {
-                // println!("error part: {:#?}", err);
                 println!("facebook error");
                 let insert_result = insert_all_type_of_user(&conn, data);
                 if (insert_result == DuplicateEmail::Nonexist) {
@@ -1274,8 +843,6 @@ pub fn all_type_login(user_data: Json<Test_Users>) -> Json<stringObj> {
                 } else {
                     string = format!("Something went wrong when trying to Registering");
                 }
-                //create a new user 
-                //then auto login for them
             }
         }
 
@@ -1286,13 +853,10 @@ pub fn all_type_login(user_data: Json<Test_Users>) -> Json<stringObj> {
         match users.filter(user_email.eq(email_get.clone()))
             .get_result::<_Test_Users>(&conn) {
             Ok(user) => {
-                //generate token
-                //println!("ok part: {:#?}", user);
                 println!("google ok");
                 string = generate_token(user.user_email.clone().unwrap(), user.user_role.unwrap());
             },
             Err(err) => {
-                // println!("error part: {:#?}", err);
                 println!("google error");
                 let insert_result = insert_all_type_of_user(&conn, data);
                 if (insert_result == DuplicateEmail::Nonexist) {
@@ -1306,13 +870,11 @@ pub fn all_type_login(user_data: Json<Test_Users>) -> Json<stringObj> {
         }
 
     } else {
-        // println!("Sorry we don't have this type of login");
         string = format!("Sorry we don't have this type of login");
     }
 
     return Json(
         stringObj {
-            // string: format!("Something went wrong when trying to Registering"),
             string
         }
     )

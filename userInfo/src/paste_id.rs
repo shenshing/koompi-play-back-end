@@ -4,21 +4,11 @@ use std::borrow::Cow;
 use rocket::request::FromParam;
 use rocket::http::RawStr;
 use rand::{self, Rng};
-// use rand::Rng;
-// extern crate rand;
-
-/// Table to retrieve base62 values from.
 const BASE62: &[u8] = b"0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
 
-/// A _probably_ unique paste ID.
-// #[derive(Debug)]
 pub struct PasteID<'a>(Cow<'a, str>);
 
 impl<'a> PasteID<'a> {
-    /// Generate a _probably_ unique ID with `size` characters. For readability,
-    /// the characters used are from the sets [0-9], [A-Z], [a-z]. The
-    /// probability of a collision depends on the value of `size` and the number
-    /// of IDs generated thus far.
     pub fn new(size: usize) -> PasteID<'static> {
         let mut id = String::with_capacity(size);
         let mut rng = rand::thread_rng();

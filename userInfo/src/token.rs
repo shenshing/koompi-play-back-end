@@ -14,15 +14,7 @@ use serde::{Serialize, Deserialize};
 pub struct Claims {
     pub aud: String,        // Optional. Audience
     #[serde(with = "jwt_numeric_date")]
-    pub exp: DateTime<Utc>, // Required (validate_exp defaults to true in validation). Expiration time
-    // #[serde(with = "jwt_numeric_date")]
-    // pub iat: DateTime<Utc>,  // Optional. Issued at
-    // pub iss: String,       // Optional. Issuer
-    // #[serde(with = "jwt_numeric_date")]
-    // nbf: DateTime<Utc>,  // Optional. Not Before
-    // pub sub: String,        // Optional. Subject (whom token refers to)
-    // pub user_name: String,
-    // pub user_password: String,
+    pub exp: DateTime<Utc>,
     pub user_email: String,
     pub user_role: String
 }
@@ -97,7 +89,6 @@ mod jwt_numeric_date {
 use chrono::Duration;
 pub fn generate_token(login_email: String, login_role: String) -> String {
     let issue_time: DateTime<Utc> = Utc::now();
-    //declare 1day durations
     let duration = Duration::days(1);
     // let duration = Duration::seconds(10i64);
     // let duration = Duration::minutes(5i64);
@@ -106,11 +97,6 @@ pub fn generate_token(login_email: String, login_role: String) -> String {
     let claims = Claims {
         aud:            String::from("koompiPlay"),
         exp:            expire_time,
-        // iat:            issue_time,
-        // iss:            String::from("koompiPlay"),
-        // sub:            String::from("login"),
-        // user_name:      login_name,
-        // user_password:  login_password,
         user_email:     login_email,
         user_role:      login_role,
     };
@@ -119,8 +105,7 @@ pub fn generate_token(login_email: String, login_role: String) -> String {
     return token;   
 }
 
-pub fn decode_token(token: String) -> jsonwebtoken::TokenData<Claims> {
-    // println!("in decode token: {}", token);
+pub fn decode_token(token: String) -> jsonwebtoken::TokenData<Claims> {;
     jsonwebtoken::decode::<Claims>(&token, "secret".as_ref(), &Validation::default()).unwrap()
 }
 
@@ -128,20 +113,13 @@ use serde_json::value::Value;
 use std::collections::HashSet;
 use jsonwebtoken::errors::Error;
 pub fn decode_token_result(token: String) -> Result<jsonwebtoken::TokenData<Claims>, Error> {
-    // println!("in decode token: {}", token);
-
-    // let mut aud_hashset = HashSet::new();
-    // aud_hashset.insert("koompiPlay".to_string());
-    
-    // let aud_hashset = json!("koompiPlay");
     let aud_value = Some(serde_json::value::Value::String(String::from("koompiPlay")));
 
     let mut validation = Validation {
-        // aud: Some(aud_hashset),
-        // aud: Some(String::from("koompiPlay")),
         aud: aud_value,
         ..Default::default()
     };
-    // jsonwebtoken::decode::<Claims>(&token, "secret".as_ref(), &Validation::default())
+    // jsonwebtoken::decode::<Claims>(&token, "secret".as_ref(), &validation)
+
     jsonwebtoken::decode::<Claims>(&token, "secret".as_ref(), &validation)
 }
