@@ -7,5 +7,6 @@ Create Table questions (
     incorrect_answer2 Varchar(50) Not Null,
     incorrect_answer3 Varchar(50) Not Null,
     incorrect_answer4 Varchar(50) Not Null,
-    incorrect_answer5 Varchar(50) Not Null  
+    incorrect_answer5 Varchar(50) Not Null,
+    category    Varchar(20) Not Null
 )
