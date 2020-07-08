@@ -1,3 +1,0 @@
-#!/bin/bash
-
-cargo run --manifest-path /var/www/app/main/Cargo.toml --release
