@@ -26,6 +26,7 @@ use rocket_cors::{
     Cors, CorsOptions 
 };
 
+//
 fn main() {
     let allowed_origins = AllowedOrigins::all();
 
