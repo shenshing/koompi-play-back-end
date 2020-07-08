@@ -1,0 +1,4 @@
+copy file: Dockerfile and docker-compose.yml to project directory
+
+sudo chmod +x build
+run ./build
