@@ -16,6 +16,7 @@ pub struct Claims {
     #[serde(with = "jwt_numeric_date")]
     pub exp: DateTime<Utc>,
     pub user_email: String,
+    pub phone_number: String,
     pub user_role: String
 }
 
@@ -87,7 +88,7 @@ mod jwt_numeric_date {
 }
 
 use chrono::Duration;
-pub fn generate_token(login_email: String, login_role: String) -> String {
+pub fn generate_token(login_email: String, login_role: String, login_number: String) -> String {
     let issue_time: DateTime<Utc> = Utc::now();
     let duration = Duration::days(1);
     // let duration = Duration::seconds(10i64);
@@ -98,6 +99,7 @@ pub fn generate_token(login_email: String, login_role: String) -> String {
         aud:            String::from("koompiPlay"),
         exp:            expire_time,
         user_email:     login_email,
+        phone_number:   login_number,
         user_role:      login_role,
     };
 

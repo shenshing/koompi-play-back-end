@@ -61,14 +61,14 @@ pub fn get_user(conn: &PgConnection) -> Vec<_Test_Users>{
 }
 
 #[derive(Debug, PartialEq)]
-pub enum deleteMessage {
+pub enum Message {
     Success,
     Unsuccess,
 }
 
 use self::diesel::prelude::*;
 use crate::schema::users;
-pub fn remove_user(userEmail: String) -> deleteMessage {
+pub fn remove_user(userEmail: String) -> Message {
     use self::schema::users::dsl::*;
     let email_pattern = format!("%{}%", format_args!("{}", userEmail));
 
@@ -76,9 +76,9 @@ pub fn remove_user(userEmail: String) -> deleteMessage {
     let delete_user = diesel::delete(users.filter(user_email.like(email_pattern)))
         .execute(&connection);
     if(delete_user == Ok(1)) {
-        return deleteMessage::Success;
+        return Message::Success;
     } else {
-        return deleteMessage::Unsuccess;
+        return Message::Unsuccess;
     }
 }
 
@@ -114,6 +114,24 @@ pub fn filter_user1(token: String) -> Find {
     let email_pattern = format!("%{}%", format_args!("{}", email));
 
     let result = users.filter(user_email.like(email_pattern))
+        .execute(&establish_connection())
+        .unwrap();
+    if(result == 0) {
+        return Find::Notfound;
+    } else {
+        return Find::Found;
+    }
+}
+
+pub fn filter_user2(token: String) -> Find {
+    use self::schema::users::dsl::*;
+
+    let dec_token = decode_token(token);
+
+    let phone = dec_token.claims.phone_number;
+    let phone_pattern = format!("%{}%", format_args!("{}", phone));
+
+    let result = users.filter(phone_number.like(phone_pattern))
         .execute(&establish_connection())
         .unwrap();
     if(result == 0) {
@@ -429,13 +447,13 @@ pub fn self_destroy(key: ApiKey) -> Json<stringObj> {
     let dec_res = decode_token(token.clone());
     let email = dec_res.claims.user_email;
 
-    if(remove_user(email.clone()) == deleteMessage::Success) {
+    if(remove_user(email.clone()) == Message::Success) {
         Json(
             stringObj {
                 string: format!("user delete successfull")
             }
         )
-    } else if (remove_user(email.clone()) == deleteMessage::Unsuccess) {
+    } else if (remove_user(email.clone()) == Message::Unsuccess) {
         Json(
             stringObj {
                 string: format!("user delete unsuccessful"),
@@ -621,13 +639,13 @@ pub fn login(log_info: Json<loginInfo>) -> Json<stringObj> {
 
     let user_list = get_user(&connection);
     let mut string = String::new();
+    let mut number = String::new();
 
     for _user in user_list.iter() {
         if(_user.user_email.clone().unwrap() == log_info.user_email.trim()) {
             if(_user.user_password.clone().unwrap().clone() == log_info.user_password.trim()) {
                 let role = _user.user_role.as_ref().unwrap();
-                string = generate_token(_user.user_email.clone().unwrap(), 
-                                        role.to_string());
+                string = generate_token(_user.user_email.clone().unwrap(), role.to_string(), number);
                 break;
             } else {
                 string = format!("Log in Failed");  
@@ -648,29 +666,51 @@ pub fn userData(key: ApiKey) -> Json<_Test_Users>{
     use self::schema::users::dsl::*;
     
     let token = key.into_inner();
+    let decode = decode_token(token.clone());
 
-    println!("token: {}", token);
-
-
-    let find_result = filter_user1(token.clone().to_string());
-
-    let decode = decode_token(token.clone().to_string());
-    let email = decode.claims.user_email;
-
-    let email_pattern = format!("%{}%", format_args!("{}", email));
+    // println!("token: {}", token);
 
 
-    if(find_result == Find::Found) {
+   
+    // let number = decode.claims.phone_number;
 
-        let user = users.filter(user_email.eq(email))
-            .get_result::<_Test_Users>(&establish_connection())
-            .unwrap();
-        println!("true in back-end: {:#?}", user);
-        return Json(user);
+    
+
+    if(decode.claims.user_email == String::from("")) {
+        // println!("email is null");
+        let find_result = filter_user2(token.clone().to_string());
+        let decode = decode_token(token.clone().to_string());
+        let number = decode.claims.phone_number;
+        let phone_pattern = format!("%{}%", format_args!("{}", number));
+        if(find_result == Find::Found) {
+            let user = users.filter(phone_number.eq(number))
+                .get_result::<_Test_Users>(&establish_connection())
+                .unwrap();
+            return Json(user);
+        } else {
+            let user = _Test_Users::new();
+            return Json(user);
+        }
     } else {
-        let user = _Test_Users::new();
-        return Json(user);
+        // println!("email not null");
+
+        let find_result = filter_user1(token.clone().to_string());
+        let decode = decode_token(token.clone().to_string());
+        let email = decode.claims.user_email;
+        let email_pattern = format!("%{}%", format_args!("{}", email));
+
+        if(find_result == Find::Found) {
+            let user = users.filter(user_email.eq(email))
+                .get_result::<_Test_Users>(&establish_connection())
+                .unwrap();
+            println!("true in back-end: {:#?}", user);
+            return Json(user);
+        } else {    
+            let user = _Test_Users::new();
+            return Json(user);
+        }
     }
+    
 }
 
 
@@ -817,7 +857,8 @@ pub fn all_type_login(user_data: Json<Test_Users>) -> Json<stringObj> {
             .get_result::<_Test_Users>(&conn) {
             Ok(user) => {
                 println!("local ok");
-                string = generate_token(user.user_email.clone().unwrap(), user.user_role.unwrap());
+                let mut number = String::new();
+                string = generate_token(user.user_email.clone().unwrap(), user.user_role.unwrap(), number);
             },
             Err(err) => {
                 println!("local error");
@@ -831,17 +872,19 @@ pub fn all_type_login(user_data: Json<Test_Users>) -> Json<stringObj> {
             .get_result::<_Test_Users>(&conn) {
             Ok(user) => {
                 println!("facebook ok");
-                string = generate_token(user.user_email.clone().unwrap(), user.user_role.unwrap());
+                let mut number = String::new();
+                string = generate_token(user.user_email.clone().unwrap(), user.user_role.unwrap(), number);
             },
             Err(err) => {
                 println!("facebook error");
                 let insert_result = insert_all_type_of_user(&conn, data);
                 if (insert_result == DuplicateEmail::Nonexist) {
-                    string = generate_token(email_get.clone(), String::from("User"));
+                    let mut number = String::new();
+                    string = generate_token(email_get.clone(), String::from("User"), number);
                 } else if (insert_result == DuplicateEmail::Exist) {
                     string = format!("Email already exist");
                 } else {
-                    string = format!("Something went wrong when trying to Registering");
+                    string = format!("Something went wrong when trying to Register");
                 }
             }
         }
@@ -854,22 +897,48 @@ pub fn all_type_login(user_data: Json<Test_Users>) -> Json<stringObj> {
             .get_result::<_Test_Users>(&conn) {
             Ok(user) => {
                 println!("google ok");
-                string = generate_token(user.user_email.clone().unwrap(), user.user_role.unwrap());
+                let number = String::new();
+                string = generate_token(user.user_email.clone().unwrap(), user.user_role.unwrap(), number);
             },
             Err(err) => {
                 println!("google error");
                 let insert_result = insert_all_type_of_user(&conn, data);
                 if (insert_result == DuplicateEmail::Nonexist) {
-                    string = generate_token(email_get.clone(), String::from("User"));
+                    let mut number = String::new();
+                    string = generate_token(email_get.clone(), String::from("User"), number);
                 } else if (insert_result == DuplicateEmail::Exist) {
                     string = format!("Email already exist");
                 } else {
-                    string = format!("Something went wrong when trying to Registering");
+                    string = format!("Something went wrong when trying to Register");
                 }
             }
         }
-
-    } else {
+    } 
+    else if(data.login_type.clone() == String::from("telegram")) {
+        println!("User login with telegram");
+        let number = data.phone_number.clone();
+        match users.filter(phone_number.eq(number.clone()))
+            .get_result::<_Test_Users>(&conn) {
+            Ok(user) => {
+                println!("telegram ok");
+                let mut email = String::new();
+                string = generate_token(email, String::from("User"), user.phone_number.clone().unwrap());
+            },
+            Err(err) => {
+                println!("telegram error");
+                let insert_result = insert_all_type_of_user(&conn, data.clone());
+                if (insert_result == DuplicateEmail::Nonexist) {
+                    let mut email = String::new();
+                    string = generate_token(email.clone(), String::from("User"), data.phone_number.unwrap());
+                } else if (insert_result == DuplicateEmail::Exist) {
+                    string = format!("Phone number already exist");
+                } else {
+                    string = format!("Something went wrong when trying to Register");
+                }
+            }
+        }
+    } 
+    else {
         string = format!("Sorry we don't have this type of login");
     }
 
