@@ -4,7 +4,7 @@ services:
     # image: hongsea/koompiplay:nightly-2020-03-08
     image: pionux/backend-play:v0.2
     ports:
-      - '9000:9000'
+      - '9001:9001'
     volumes:
       - ./:/var/www/app/
     working_dir: /var/www/app/
