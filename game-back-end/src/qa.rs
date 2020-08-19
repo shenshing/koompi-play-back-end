@@ -103,7 +103,7 @@ pub fn random_answer(question: Vec<QADB>) -> Vec<Question> {
 //random question
 use crate::models::QADB;
 pub fn random_question() -> Result<Vec<QADB>, diesel::result::Error> {
-    let statement = format!("Select * From questions Order By random() limit 5;");
+    let statement = format!("Select * From questions Order By random() limit 15;");
 
     let result = sql_query(statement)
         .get_results(&establish_connection());
