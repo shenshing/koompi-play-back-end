@@ -116,7 +116,7 @@ pub fn random_question() -> Result<Vec<QADB>, diesel::result::Error> {
 }
 
 pub fn random_question_category(cate: String) -> Result<Vec<QADB>, diesel::result::Error> {
-    let statement = format!("Select * From questions Where category='{}' Order By random() limit 5;", cate);
+    let statement = format!("Select * From questions Where category='{}' Order By random() limit 15;", cate);
 
     let result = sql_query(statement)
         .get_results(&establish_connection());
